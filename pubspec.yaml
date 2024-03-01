@@ -25,17 +25,17 @@ dependencies:
   firebase_storage: ^11.2.7
 
   file_picker: ^5.5.0
-  open_file: ^3.3.2
+  # open_file: ^3.3.2
   image_picker: ^1.0.4
   uuid: ^3.0.5
-  path_provider: ^2.1.1
-  dio: ^5.3.3
+  # path_provider: ^2.1.1
+  # dio: ^5.3.3
   syncfusion_flutter_pdfviewer: ^23.1.36
-  permission_handler: ^11.0.0
-  flutter_webview_plugin: ^0.4.0
+  # permission_handler: ^11.0.0
+  # flutter_webview_plugin: ^0.4.0
   syncfusion_flutter_charts: ^23.1.38
-  flutter_inappwebview: ^5.7.2+3
-  image_cropper: ^5.0.0
+  # flutter_inappwebview: ^5.7.2+3
+  # image_cropper: ^5.0.0
 
 dev_dependencies:
   flutter_test:
