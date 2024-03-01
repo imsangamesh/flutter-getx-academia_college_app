@@ -1,111 +1,105 @@
 import 'package:flutter/material.dart';
-import 'package:newbie/core/constants/my_constants.dart';
-
-import '../../models/user_model.dart';
+import 'package:newbie/core/constants/constants.dart';
+import 'package:newbie/core/constants/pref_keys.dart';
+import 'package:newbie/core/utils/popup.dart';
+import 'package:newbie/data/college_data.dart';
 
 class MyHelper {
   //
-  static String getFileExtension(String filePath) {
-    return ".${filePath.split('.').last}";
-  }
-
   static Size scrSize(BuildContext context) => MediaQuery.of(context).size;
 
-  static String profilePic =
-      'https://img.freepik.com/premium-psd/3d-cartoon-avatar-smiling-man_1020-5130.jpg?size=338&ext=jpg&uid=R65626931&ga=GA1.2.1025021015.1655558182&semt=sph';
-
-  static const departments = [
-    {'dept': 'Computer Science', 'key': 'CSE'},
-    {'dept': 'Information Science', 'key': 'ISE'},
-    {'dept': 'Electronic & Instrumentation', 'key': 'EI'},
-    {'dept': 'Civil Engineering', 'key': 'CV'},
-    {'dept': 'Artificial Intelligence', 'key': 'AIML'},
-    {'dept': 'BioTechnology', 'key': 'BT'},
-    {'dept': 'Electronics and Communication', 'key': 'ECE'},
-    {'dept': 'Electronics and Electrical', 'key': 'EEE'},
-    {'dept': 'Mechanical Engineering', 'key': 'ME'},
-    {'dept': 'Industrial Production', 'key': 'IP'},
-    {'dept': 'Automobile Engineering', 'key': 'AU'},
-  ];
-
-  static String deptToKey(String dept) {
-    return departments.firstWhere((each) => each['dept'] == dept)['key'] ?? '';
-  }
-
-  static String keyToDept(String key) {
-    return departments.firstWhere((each) => each['key'] == key)['dept'] ?? '';
-  }
-
-  static String roleToString(Role role) {
-    switch (role) {
-      case Role.student:
-        return 'Student';
-      case Role.faculty:
-        return 'Faculty';
-      case Role.admin:
-        return 'Admin';
-      default:
-        return '';
+  /// ---------------------------------------------- `Department Funs`
+  /// `long to short` department
+  static l2sDept(String name) {
+    for (var each in CollegeData.departments.entries) {
+      if (name == each.value) return each.key;
     }
   }
 
-  static enumToString(dynamic enumData) => enumData.toString().split('.')[1];
-
-  static Role stringToRole(String roleStr) {
-    switch (roleStr) {
-      case 'Student':
-        return Role.student;
-      case 'Faculty':
-        return Role.faculty;
-      case 'Admin':
-        return Role.admin;
-      default:
-        return Role.student;
+  /// `short to long` department
+  static s2lDept(String name) {
+    for (var each in CollegeData.departments.entries) {
+      if (name == each.value) return each.key;
     }
-  }
-
-  static Future<Map> fetchStudentMap() async {
-    final email = auth.currentUser!.email;
-
-    final studentsData = await fire.collection('students').get();
-    final studentMap = studentsData.docs
-        .map((e) => e.data())
-        .firstWhere((stdMap) => stdMap['email'] == email);
-
-    return studentMap;
-  }
-
-  static Future<Map> fetchFacultyMap() async {
-    final email = auth.currentUser!.email;
-
-    final facultyData = await fire.collection('faculties').get();
-    final facultyMap = facultyData.docs
-        .map((e) => e.data())
-        .firstWhere((stdMap) => stdMap['email'] == email);
-
-    return facultyMap;
   }
 
   static String semToYear(String sem) {
     switch (sem) {
       case '1':
-        return '1';
+        return CollegeData.years[0];
       case '2':
-        return '1';
+        return CollegeData.years[0];
       case '3':
-        return '2';
+        return CollegeData.years[1];
       case '4':
-        return '2';
+        return CollegeData.years[1];
       case '5':
-        return '3';
+        return CollegeData.years[2];
       case '6':
-        return '3';
+        return CollegeData.years[2];
       case '7':
-        return '4';
+        return CollegeData.years[3];
       case '8':
-        return '4';
+        return CollegeData.years[3];
       default:
         return '1';
     }
   }
+
+  /// ---------------------------------------------- `FETCH USER DATA`
+  static Future<Map<String, dynamic>> fetchStudentMap() async {
+    try {
+      final email = auth.currentUser!.email;
+
+      final studentsData = await fire.collection(FireKeys.students).get();
+      final studentMap = studentsData.docs
+          .map((e) => e.data())
+          .firstWhere((stdMap) => stdMap['email'] == email);
+
+      return studentMap;
+    } catch (e) {
+      Popup.alert('Oops!', 'Error while fetching core student data!');
+      return {};
+    }
+  }
+
+  static Future<Map<String, dynamic>> fetchFacultyMap() async {
+    try {
+      final email = auth.currentUser!.email;
+
+      final facultyData = await fire.collection(FireKeys.faculties).get();
+      final facultyMap = facultyData.docs
+          .map((e) => e.data())
+          .firstWhere((stdMap) => stdMap['email'] == email);
+
+      return facultyMap;
+    } catch (e) {
+      Popup.alert('Oops!', 'Error while fetching core faculty data!');
+      return {};
+    }
+  }
+
+  static Future<Map<String, dynamic>> fetchAdminMap() async {
+    try {
+      final email = auth.currentUser!.email;
+
+      final facultyData = await fire.collection(FireKeys.admins).get();
+      final facultyMap = facultyData.docs
+          .map((e) => e.data())
+          .firstWhere((stdMap) => stdMap['email'] == email);
+
+      return facultyMap;
+    } catch (e) {
+      Popup.alert('Oops!', 'Error while fetching core admin data!');
+      return {};
+    }
+  }
+
+  static String profilePic =
+      'https://img.freepik.com/premium-psd/3d-cartoon-avatar-smiling-man_1020-5130.jpg?size=338&ext=jpg&uid=R65626931&ga=GA1.2.1025021015.1655558182&semt=sph';
+}
+
+class Dummy {
+  static const lorem =
+      '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum''';
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:newbie/core/constants/my_images.dart';
-import 'package:newbie/core/themes/my_colors.dart';
-import 'package:newbie/core/themes/my_textstyles.dart';
+import 'package:newbie/core/constants/images.dart';
+import 'package:newbie/core/themes/app_colors.dart';
+import 'package:newbie/core/themes/app_text_styles.dart';
+import 'package:newbie/data/college_data.dart';
 import 'package:newbie/modules/auth/auth_controller.dart';
 
 import '../../core/widgets/my_dropdown_wrapper.dart';
@@ -20,19 +21,19 @@ class SigninScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: MyColors.white,
+      backgroundColor: Colors.white,
       body: Obx(
         () => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Integrated Student Mgmt Platform',
+                'Integrated Student Mgmt App',
                 style: GoogleFonts.quicksand(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: ThemeColors.darkPrim,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.prim,
                   ),
                 ),
               ),
@@ -47,8 +48,8 @@ class SigninScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
                 child: MyDropDownWrapper(
                   DropdownButton(
-                    dropdownColor: ThemeColors.listTile,
-                    underline: MyDropDownWrapper.transDivider,
+                    dropdownColor: AppColors.listTile,
+                    underline: MyDropDownWrapper.transparentDivider,
                     isExpanded: true,
                     iconSize: 30,
                     icon: const Icon(Icons.arrow_drop_down),
@@ -59,7 +60,7 @@ class SigninScreen extends StatelessWidget {
                               child: Text(
                                 '  $each',
                                 style: selectedRole() == each
-                                    ? TextStyle(color: ThemeColors.darkPrim)
+                                    ? AppTStyles.subHeading
                                     : null,
                               ),
                             ))
@@ -71,23 +72,24 @@ class SigninScreen extends StatelessWidget {
               const SizedBox(height: 15),
 
               ElevatedButton(
-                onPressed: () =>
-                    authController.signInWithGoogle(selectedRole()),
+                onPressed: () => authController.signInWithGoogle(
+                  Role.fromStr(selectedRole()),
+                ),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.only(top: 5, bottom: 5, left: 8),
-                  textStyle: MyTStyles.title,
-                  backgroundColor: ThemeColors.prim,
+                  textStyle: AppTStyles.heading,
+                  backgroundColor: AppColors.prim,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.account_circle, size: 30),
-                    SizedBox(width: 30),
-                    Text('Sign up with Google'),
-                    SizedBox(width: 50),
+                    const Icon(Icons.account_circle, size: 30),
+                    const SizedBox(width: 30),
+                    Text('Sign up with Google', style: AppTStyles.button),
+                    const SizedBox(width: 50),
                   ],
                 ),
               ),

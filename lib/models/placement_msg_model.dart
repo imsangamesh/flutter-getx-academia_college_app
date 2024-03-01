@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PlacementMsgModel {
-  String msgId;
+  String id;
   String title;
   String description;
   String date;
@@ -12,7 +12,7 @@ class PlacementMsgModel {
   Timestamp createdAt;
 
   PlacementMsgModel({
-    required this.msgId,
+    required this.id,
     required this.title,
     required this.description,
     required this.date,
@@ -25,7 +25,7 @@ class PlacementMsgModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'msgId': msgId,
+      'id': id,
       'title': title,
       'description': description,
       'date': date,
@@ -39,7 +39,7 @@ class PlacementMsgModel {
 
   List<dynamic> toList() {
     return [
-      msgId,
+      id,
       title,
       description,
       date,
@@ -53,7 +53,7 @@ class PlacementMsgModel {
 
   static PlacementMsgModel fromMap(Map<String, dynamic> map) {
     return PlacementMsgModel(
-      msgId: map['msgId'],
+      id: map['id'],
       title: map['title'],
       description: map['description'],
       date: map['date'],
@@ -67,7 +67,7 @@ class PlacementMsgModel {
 
   static PlacementMsgModel fromList(List<dynamic> listOfPlacementMsgModel) {
     return PlacementMsgModel(
-      msgId: listOfPlacementMsgModel[0],
+      id: listOfPlacementMsgModel[0],
       title: listOfPlacementMsgModel[1],
       description: listOfPlacementMsgModel[2],
       date: listOfPlacementMsgModel[3],
@@ -83,7 +83,7 @@ class PlacementMsgModel {
     final snapData = snapshot.data() as Map<String, dynamic>;
 
     return PlacementMsgModel(
-      msgId: snapData['msgId'],
+      id: snapData['id'],
       title: snapData['title'],
       description: snapData['description'],
       date: snapData['date'],

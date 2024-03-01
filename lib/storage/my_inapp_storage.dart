@@ -3,15 +3,14 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:newbie/core/utils/popup.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../core/utilities/utils.dart';
 
 class MyInAppStorage {
   static Future<File?> downloadAndSaveFile(
       String downloadLink, String filename) async {
     try {
-      Utils.progressIndctr(label: 'downloading...');
+      Popup.loading(label: 'downloading...');
 
       final appStorage = await getApplicationDocumentsDirectory();
       final fileDirectory = Directory('${appStorage.path}/$filename');
@@ -37,11 +36,11 @@ class MyInAppStorage {
       await myFile.writeAsBytes(response.data);
 
       Get.back();
-      Utils.showSnackBar('downloaded', status: true);
+      Popup.snackbar('downloaded', status: true);
       return myFile;
     } catch (e) {
       Get.back();
-      Utils.normalDialog();
+      Popup.general();
       log(e.toString());
       return null;
     }

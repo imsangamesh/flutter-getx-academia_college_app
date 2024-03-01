@@ -1,47 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newbie/modules/activity_points/upload_student_activity.dart';
-import 'package:newbie/modules/analytics/student_marks_analytics.dart';
-import 'package:newbie/modules/auth/auth_controller.dart';
+import 'package:newbie/core/helpers/app_data.dart';
+import 'package:newbie/core/helpers/my_helper.dart';
+import 'package:newbie/modules/activity_points/activity_analytics.dart';
+import 'package:newbie/modules/activity_points/upload_new_activity.dart';
+import 'package:newbie/modules/attendence/student_attendence_analytics.dart';
+import 'package:newbie/modules/placement/placement_chat_page.dart';
+import 'package:newbie/modules/result/result_analytics.dart';
 
 import '../../core/widgets/my_buttons.dart';
 
 class StudentDashboard extends StatelessWidget {
   StudentDashboard({super.key});
 
-  final authController = Get.put(AuthController());
+  final Map<String, dynamic> studentData = AppData.fetchData();
+
+  get currentYear => MyHelper.semToYear(studentData['sem']);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Student Dashboard'),
-        actions: [
-          IconButton(
-            onPressed: () => authController.logout(),
-            icon: const Icon(Icons.logout),
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            MyElevatedBtn(
-              'Activity Points',
-              () => Get.to(() => UploadStudentActivity()),
-            ),
-            MyElevatedBtn(
-              'Graph',
-              () => Get.to(() => const StudentMarksAnalytics()),
-            ),
-            // MyElevatedBtn(
-            //   'Attendence',
-            //   () => Get.to(() => AttendenceSelector()),
-            // ),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        MyElevatedBtn(
+          '$currentYear Placement Updates',
+          () => Get.to(() => PlacementChatPage(currentYear)),
         ),
-      ),
+        //
+        const SizedBox(height: 15),
+        MyElevatedBtn(
+          'Attendance Analysis',
+          () => Get.to(() => StudentAttendanceAnalytics()),
+        ),
+        //
+        const SizedBox(height: 15),
+        MyElevatedBtn(
+          'Result Analysis',
+          () => Get.to(() => const ResultAnalytics()),
+        ),
+        //
+        const SizedBox(height: 15),
+        MyElevatedBtn(
+          'Upload New Activity',
+          () => Get.to(() => AddNewActivity()),
+        ),
+        //
+        const SizedBox(height: 15),
+        MyElevatedBtn(
+          'Activity Analysis',
+          () => Get.to(() => const ActivityAnalytics()),
+        ),
+      ],
     );
   }
 }

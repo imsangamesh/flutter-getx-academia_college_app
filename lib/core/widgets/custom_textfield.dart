@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../themes/my_colors.dart';
+import '../themes/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
@@ -12,16 +12,18 @@ class CustomTextField extends StatelessWidget {
     this.suffixFun,
     this.radius,
     this.inputType,
+    this.maxLength,
     super.key,
   });
 
   final String label;
-  final int maxLines;
+  final int? maxLines;
   final IconData? icon, suffixIcon;
   final TextEditingController titleController;
   final double? radius;
   final TextInputType? inputType;
   final VoidCallback? suffixFun;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,16 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         keyboardType: inputType ?? TextInputType.text,
         decoration: InputDecoration(
+          counterText: '', // removes the below `maxLength` counter
           labelText: label,
-          fillColor: ThemeColors.shade20,
+          fillColor: AppColors.listTile,
           filled: true,
           contentPadding: const EdgeInsets.all(16),
           prefixIcon: icon != null
               ? Icon(
                   icon,
                   size: 25,
-                  color: ThemeColors.prim,
+                  color: AppColors.prim,
                 )
               : null,
           suffixIcon: suffixIcon != null
@@ -47,7 +50,7 @@ class CustomTextField extends StatelessWidget {
                   icon: Icon(
                     suffixIcon,
                     size: 25,
-                    color: ThemeColors.prim,
+                    color: AppColors.prim,
                   ),
                 )
               : null,
@@ -59,8 +62,8 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(radius ?? 16),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColors.shade200,
+            borderSide: const BorderSide(
+              color: AppColors.prim,
               width: 2,
             ),
             borderRadius: BorderRadius.circular(radius ?? 16),
@@ -68,6 +71,7 @@ class CustomTextField extends StatelessWidget {
         ),
         controller: titleController,
         maxLines: maxLines,
+        maxLength: maxLength,
       ),
     );
   }

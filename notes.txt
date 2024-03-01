@@ -1,0 +1,52 @@
+* Google Authentication: for everyone for security
+
+
+* Attendance: 
+- faculty can take attendance from mobile: checkbox of all USNs from the class will be there
+- students & parents can view their attendance
+- eligibility status will be calculated
+- attendance graph analysis
+- notifications of attendance for parents & students
+
+
+* Marks Report with Performance Graph
+- marks will be updated by faculty for each student
+- students & parents can view their marks
+- Students can track their performance through graph analysis
+- notification of marks to parents & students
+
+
+* Activity points for Faculty Advisor & students
+- students can uplaod an activity for approval
+- faculty can either approve or reject an activity request placed by student
+- student can track his activity points
+
+
+* Personal Achievements Tracking
+- this page is only for students themselves, where he can keep track of achievements
+
+
+* Students Profile Page
+- this is the section where he can post his achievements on his profile page, and others can view it...
+- others have to search for my name to view my profile page... in search section
+- name, profile image, backdrop, bio, achievement posts can be updated on Profile page
+- dept faculty will get the list of achievements from respective dept
+
+
+* Placement Updates
+- placement officer can upload the placement updates for a particular year 
+- active notification only for particular year students
+- a standalone page in app for news & updates of students placed -- updated by placement team.
+
+
+* Gallery
+
+
+* 2 apps 
+1. Teachers 
+2. Students + Parents
+
+
+* Advantages
+- all in one application
+- active notifications every day

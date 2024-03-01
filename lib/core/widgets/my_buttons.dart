@@ -1,9 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newbie/core/themes/theme_controller.dart';
 
-import '../themes/my_colors.dart';
-import '../themes/my_textstyles.dart';
+import '../themes/app_colors.dart';
+import '../themes/app_text_styles.dart';
+
+/// ----------------------------------------------------------------- `BACK BUTTON`
+class MyBackBtn extends StatelessWidget {
+  const MyBackBtn({this.icon, this.onTap, this.size, this.btnSize, super.key});
+
+  final IconData? icon;
+  final VoidCallback? onTap;
+  final double? size, btnSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 37,
+      width: 37,
+      child: FloatingActionButton.small(
+        heroTag: UniqueKey(),
+        onPressed: onTap ?? () => Get.back(),
+        elevation: 0,
+        highlightElevation: 5,
+        child: Container(
+          height: btnSize ?? 32,
+          width: btnSize ?? 32,
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(40, 0, 0, 0),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon ?? Icons.chevron_left_rounded, size: size ?? 25),
+        ),
+      ),
+    );
+  }
+}
 
 /// ----------------------------------------------------------------- `CLOSE`
 class MyCloseBtn extends StatelessWidget {
@@ -18,7 +49,7 @@ class MyCloseBtn extends StatelessWidget {
       child: InkWell(
         onTap: ontap ?? () => Get.back(),
         borderRadius: BorderRadius.circular(30),
-        splashColor: MyColors.pink,
+        splashColor: AppColors.prim,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -27,13 +58,13 @@ class MyCloseBtn extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.circle,
-                color: MyColors.lightPink,
+                color: AppColors.scaffold,
                 size: 30,
               ),
             ),
-            Icon(icon ?? Icons.close, size: 23, color: MyColors.darkPink),
+            Icon(icon ?? Icons.close, size: 23, color: AppColors.oppScaffold),
           ],
         ),
       ),
@@ -56,10 +87,6 @@ class MyOutlinedBtn extends StatelessWidget {
   final IconData? icon;
   final double? radius;
 
-  primary() => Get.isDarkMode
-      ? MyColors.lightPurple.withAlpha(150)
-      : MyColors.pink.withAlpha(255);
-
   @override
   Widget build(BuildContext context) {
     /// ----------------------------- `Label`
@@ -68,26 +95,26 @@ class MyOutlinedBtn extends StatelessWidget {
         onPressed: ontap,
         style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius ?? 30),
+            borderRadius: BorderRadius.circular(radius ?? 10),
           ),
-          side: BorderSide(width: 1, color: primary()),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          side: const BorderSide(width: 1, color: AppColors.prim),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         ),
-        child: Text(label, style: MyTStyles.title),
+        child: Text(label, style: AppTStyles.outlineButton),
       );
     }
 
     /// ----------------------------- `Label & Icon`
     return OutlinedButton.icon(
       onPressed: ontap,
-      icon: Icon(icon),
-      label: Text(label, style: MyTStyles.title),
+      icon: Icon(icon, color: AppColors.outlineButton),
+      label: Text(label, style: AppTStyles.outlineButton),
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius ?? 30),
+          borderRadius: BorderRadius.circular(radius ?? 10),
         ),
-        side: BorderSide(width: 1, color: primary()),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7.5),
+        side: const BorderSide(width: 1, color: AppColors.prim),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7.5),
       ),
     );
   }
@@ -108,10 +135,6 @@ class MyElevatedBtn extends StatelessWidget {
   final IconData? icon;
   final double? radius;
 
-  primary() => Get.isDarkMode
-      ? MyColors.lightPurple.withAlpha(150)
-      : MyColors.pink.withAlpha(255);
-
   @override
   Widget build(BuildContext context) {
     /// ----------------------------- `Label`
@@ -120,28 +143,26 @@ class MyElevatedBtn extends StatelessWidget {
         onPressed: ontap,
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(radius ?? 30),
+            borderRadius: BorderRadius.circular(radius ?? 10),
           ),
-          side: BorderSide(
-              width: 1, color: ontap == null ? Colors.transparent : primary()),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          side: const BorderSide(width: 1, color: AppColors.prim),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         ),
-        child: Text(label, style: MyTStyles.title),
+        child: Text(label, style: AppTStyles.elevatedButton),
       );
     }
 
     /// ----------------------------- `Label & Icon`
     return ElevatedButton.icon(
       onPressed: ontap,
-      icon: Icon(icon),
-      label: Text(label, style: MyTStyles.title),
+      icon: Icon(icon, color: AppColors.elevatedButton),
+      label: Text(label, style: AppTStyles.elevatedButton),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(radius ?? 30),
+          borderRadius: BorderRadius.circular(radius ?? 10),
         ),
-        side: BorderSide(
-            width: 1, color: ontap == null ? Colors.transparent : primary()),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 7.5),
+        side: const BorderSide(width: 1, color: AppColors.prim),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7.5),
       ),
     );
   }
@@ -164,11 +185,8 @@ class MyIconBtn extends StatelessWidget {
   final Color? color;
   final double? radius;
 
-  primary(int a) => color != null
-      ? color!.withAlpha(a)
-      : Get.put(ThemeController()).isDark()
-          ? MyColors.lightPurple.withAlpha(a)
-          : MyColors.midPink.withAlpha(a);
+  primary(int a) =>
+      color != null ? color!.withAlpha(a) : AppColors.prim.withAlpha(a);
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +237,6 @@ class MySelectableIconBtn extends StatelessWidget {
   final double? size;
   final bool isSelected;
 
-  primary(int a) => Get.isDarkMode
-      ? MyColors.lightPurple.withAlpha(a)
-      : MyColors.pink.withAlpha(a);
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -232,7 +246,7 @@ class MySelectableIconBtn extends StatelessWidget {
         padding: const EdgeInsets.all(1),
         child: FittedBox(
           child: InkWell(
-            splashColor: primary(60),
+            splashColor: AppColors.prim.withAlpha(60),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
@@ -240,26 +254,57 @@ class MySelectableIconBtn extends StatelessWidget {
                 border: Border.all(
                   width: isSelected ? 3.5 : 1.2,
                   color: isSelected
-                      ? Get.isDarkMode
-                          ? MyColors.lightPurple
-                          : MyColors.midPink
-                      : primary(80),
+                      ? AppColors.prim
+                      : AppColors.prim.withAlpha(80),
                 ),
               ),
               child: IconButton(
                 icon: Icon(
                   isSelected ? selectedIcon : unSelectedIcon,
                   size: 32,
-                  color:
-                      Get.isDarkMode ? MyColors.lightPurple : MyColors.midPink,
+                  color: AppColors.prim,
                 ),
                 onPressed: ontap,
-                splashColor: primary(80),
+                splashColor: AppColors.prim.withAlpha(80),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+/// ----------------------------------------------------------------- `CHIP`
+class MyChip extends StatelessWidget {
+  const MyChip(this.label, {this.mr = 0, super.key});
+
+  final String label;
+  final double mr;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 32.5,
+      margin: EdgeInsets.only(right: mr),
+      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.prim),
+        borderRadius: BorderRadius.circular(7),
+      ),
+      child: Center(child: Text(label, style: AppTStyles.smallCaption)),
+    );
+  }
+}
+
+/// ----------------------------------------------------------------- `NO INDENT DIVIDER`
+class NoIndentDivider extends StatelessWidget {
+  const NoIndentDivider({this.i = 0, this.ei = 0, super.key});
+
+  final double i, ei;
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(indent: i, endIndent: ei);
   }
 }
