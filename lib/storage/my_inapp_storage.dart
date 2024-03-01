@@ -1,48 +1,48 @@
-import 'dart:developer';
-import 'dart:io';
+// import 'dart:developer';
+// import 'dart:io';
 
-import 'package:dio/dio.dart';
-import 'package:get/get.dart';
-import 'package:newbie/core/utils/popup.dart';
-import 'package:path_provider/path_provider.dart';
+// import 'package:dio/dio.dart';
+// import 'package:get/get.dart';
+// import 'package:newbie/core/utils/popup.dart';
+// import 'package:path_provider/path_provider.dart';
 
-class MyInAppStorage {
-  static Future<File?> downloadAndSaveFile(
-      String downloadLink, String filename) async {
-    try {
-      Popup.loading(label: 'downloading...');
+// class MyInAppStorage {
+//   static Future<File?> downloadAndSaveFile(
+//       String downloadLink, String filename) async {
+//     try {
+//       Popup.loading(label: 'downloading...');
 
-      final appStorage = await getApplicationDocumentsDirectory();
-      final fileDirectory = Directory('${appStorage.path}/$filename');
+//       final appStorage = await getApplicationDocumentsDirectory();
+//       final fileDirectory = Directory('${appStorage.path}/$filename');
 
-      // Ensure that the directory exists, create it if it doesn't.
-      if (!await fileDirectory.exists()) {
-        fileDirectory.createSync(recursive: true);
-      }
+//       // Ensure that the directory exists, create it if it doesn't.
+//       if (!await fileDirectory.exists()) {
+//         fileDirectory.createSync(recursive: true);
+//       }
 
-      final filePath = '${fileDirectory.path}/$filename';
-      final myFile = File(filePath);
+//       final filePath = '${fileDirectory.path}/$filename';
+//       final myFile = File(filePath);
 
-      final response = await Dio().get(
-        downloadLink,
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          receiveTimeout: const Duration(seconds: 10),
-        ),
-      );
+//       final response = await Dio().get(
+//         downloadLink,
+//         options: Options(
+//           responseType: ResponseType.bytes,
+//           followRedirects: false,
+//           receiveTimeout: const Duration(seconds: 10),
+//         ),
+//       );
 
-      // Write the downloaded data to the file
-      await myFile.writeAsBytes(response.data);
+//       // Write the downloaded data to the file
+//       await myFile.writeAsBytes(response.data);
 
-      Get.back();
-      Popup.snackbar('downloaded', status: true);
-      return myFile;
-    } catch (e) {
-      Get.back();
-      Popup.general();
-      log(e.toString());
-      return null;
-    }
-  }
-}
+//       Get.back();
+//       Popup.snackbar('downloaded', status: true);
+//       return myFile;
+//     } catch (e) {
+//       Get.back();
+//       Popup.general();
+//       log(e.toString());
+//       return null;
+//     }
+//   }
+// }
