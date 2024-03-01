@@ -236,6 +236,12 @@ class ResultAnalysisGraph extends StatelessWidget {
   final String examType;
   final List<GraphData> graphData;
 
+  double get maxYValue => examType == 'SEE'
+      ? 100
+      : examType == 'Assignment'
+          ? 10
+          : 20;
+
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
@@ -271,6 +277,7 @@ class ResultAnalysisGraph extends StatelessWidget {
         majorGridLines: const MajorGridLines(color: Colors.transparent),
         majorTickLines: const MajorTickLines(color: Colors.transparent),
       ),
+      primaryYAxis: NumericAxis(maximum: maxYValue),
     );
   }
 }
