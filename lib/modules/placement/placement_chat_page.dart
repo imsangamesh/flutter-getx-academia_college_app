@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
 import 'package:newbie/core/utils/popup.dart';
+import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/placement_msg_model.dart';
 import 'package:newbie/modules/placement/add_placement_message.dart';
 import 'package:newbie/modules/placement/placement_chat_tile.dart';
@@ -48,10 +49,12 @@ class PlacementChatPage extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Get.to(() => AddPlacementMessage()),
-        label: const Text('new'),
-      ),
+      floatingActionButton: role == Role.admin
+          ? FloatingActionButton.extended(
+              onPressed: () => Get.to(() => AddPlacementMessage()),
+              label: const Text('new'),
+            )
+          : null,
     );
   }
 }

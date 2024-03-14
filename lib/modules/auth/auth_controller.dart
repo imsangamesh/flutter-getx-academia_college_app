@@ -50,15 +50,15 @@ class AuthController extends GetxController {
       }
 
       /// -------------------- `SET-UP USER`
-      _box.write(PrefKeys.isUser, true); // set user
-      AppData.storeRole(role); // set role
-      AppData.storeUserData(role); // set user data
+      await _box.write(PrefKeys.isUser, true); // set user
+      await AppData.storeRole(role); // set role
+      await AppData.storeUserData(role); // set user data
 
       // Set Theme
       final themeController = Get.put(ThemeController());
       themeController.configureTheme();
 
-      Get.offAll(() => const HomeScreen());
+      Get.offAll(() => HomeScreen());
       Popup.snackbar('Login Successful!', status: true);
       //
     } on FirebaseAuthException catch (e) {

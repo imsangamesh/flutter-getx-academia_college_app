@@ -8,6 +8,7 @@ import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/core/widgets/app_file_viewers.dart';
+import 'package:newbie/data/college_data.dart';
 
 import '../../../core/widgets/my_buttons.dart';
 import '../../../models/placement_msg_model.dart';
@@ -70,7 +71,7 @@ class PlacementChatTile extends StatelessWidget {
                 ),
               ),
               child: Text(
-                DateFormat('dd/MM  HH:mm')
+                DateFormat('MMM dd | HH:mm')
                     .format(DateTime.parse(msgModel.date)),
                 style: const TextStyle(fontSize: 11),
               ),
@@ -112,17 +113,21 @@ class AttachmentsRow extends StatelessWidget {
       child: Row(
         children: [
           // ------------------------------ DELETE Button
-          MyIconBtn(
-            Icons.delete,
-            () => Popup.confirm(
-              'Alert!',
-              'Are you sure that you want to delete this message?',
-              yesFun: () => deleteMessage(msgModel.id),
+          if (role == Role.admin)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: MyIconBtn(
+                Icons.delete,
+                () => Popup.confirm(
+                  'Alert!',
+                  'Are you sure that you want to delete this message?',
+                  yesFun: () => deleteMessage(msgModel.id),
+                ),
+                color: AppColors.danger,
+                size: 31,
+              ),
             ),
-            color: AppColors.danger,
-            size: 31,
-          ),
-          const SizedBox(width: 7),
+
           // ------------------------------ IMAGES
           if (msgModel.imageUrls.isNotEmpty)
             Padding(
@@ -135,6 +140,7 @@ class AttachmentsRow extends StatelessWidget {
                 ),
               ),
             ),
+
           // ------------------------------ PDFs
           ...msgModel.fileUrls
               .map(
@@ -171,12 +177,19 @@ class MessageImagesPage extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         child: ListView.builder(
+          padding: const EdgeInsets.all(15),
           itemCount: images.length,
           itemBuilder: (context, index) {
-            return Popup.imageLoader(
-              images[index]['url'],
-              fit: BoxFit.contain,
-              width: double.infinity,
+            return Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Popup.imageLoader(
+                  images[index]['url'],
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                ),
+              ),
             );
           },
         ),

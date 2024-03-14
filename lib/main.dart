@@ -29,7 +29,7 @@ void main() async {
   final themeController = Get.put(ThemeController());
   themeController.configureTheme();
 
-  runApp(const MyApp(HomeScreen()));
+  runApp(MyApp(HomeScreen()));
 }
 
 class MyApp extends StatelessWidget {

@@ -39,7 +39,7 @@ class SigninScreen extends StatelessWidget {
               ),
               SizedBox(
                 width: size.width,
-                child: Image.asset(MyImages.login),
+                child: Image.asset(AppImages.login),
               ),
               const SizedBox(height: 20),
 

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
 import 'package:newbie/core/helpers/file_controller.dart';
-import 'package:newbie/core/helpers/my_helper.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
@@ -83,8 +82,8 @@ class AddPlacementMessage extends StatelessWidget {
 
   /// - - - - - - - - - - - - - - - - - - - - - - - - - `SUBMIT`
   uploadAndUpdateMessage() async {
-    _titleController.text = 'Brand New Title';
-    _bodyController.text = Dummy.lorem;
+    // _titleController.text = 'Brand New Title';
+    // _bodyController.text = Dummy.lorem;
 
     if (_bodyController.text.trim() == '') {
       Popup.alert(

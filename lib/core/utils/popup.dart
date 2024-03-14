@@ -265,35 +265,37 @@ class Popup {
 
   /// ---------------------------------------------------------- `circle loader`
   static circleLoader({String? label}) {
-    Get.dialog(Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 22,
-              backgroundColor: AppColors.listTile,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: CircularProgressIndicator(
-                  strokeWidth: 5,
-                  backgroundColor: AppColors.scaffold,
-                  color: AppColors.prim,
+    Get.dialog(
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 22,
+                backgroundColor: AppColors.listTile,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircularProgressIndicator(
+                    strokeWidth: 5,
+                    backgroundColor: AppColors.scaffold,
+                    color: AppColors.prim,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 5),
-            if (label != null)
-              Text(
-                label,
-                style: AppTStyles.subHeading,
-                textAlign: TextAlign.center,
-              )
-          ],
+              const SizedBox(height: 5),
+              if (label != null)
+                Text(
+                  label,
+                  style: AppTStyles.subHeading,
+                  textAlign: TextAlign.center,
+                )
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   /// ---------------------------------------------------------- `image loader`

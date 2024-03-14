@@ -11,12 +11,13 @@ class AppData {
   static final _box = GetStorage();
 
   /// -------------------------------------------- `ROLE`
-  static storeRole(Role role) => _box.write(PrefKeys.role, role.str);
+  static Future<void> storeRole(Role role) =>
+      _box.write(PrefKeys.role, role.str);
 
   static Role fetchRole() => Role.fromStr(_box.read(PrefKeys.role));
 
   /// -------------------------------------------- `USER DATA`
-  static storeUserData(Role role) async {
+  static Future<void> storeUserData(Role role) async {
     Map<String, dynamic> userData = {};
 
     if (role == Role.student) {
@@ -27,7 +28,7 @@ class AppData {
       userData = await MyHelper.fetchAdminMap();
     }
 
-    _box.write(PrefKeys.userData, userData);
+    await _box.write(PrefKeys.userData, userData);
     log('------------------------- User Data SetUp Complete | $role');
   }
 
