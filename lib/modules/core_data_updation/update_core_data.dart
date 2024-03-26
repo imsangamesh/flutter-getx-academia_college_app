@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,27 +23,28 @@ class UpdateCoreData extends StatelessWidget {
   /// -------------------------------------- `SUBMIT & UPDATE DATA`
   Future<void> updateDataToFirestore() async {
     // TODO: Uncomment this
-    // if (textController.text.trim() == '') {
-    //   Popup.alert(
-    //     'Oops!',
-    //     'Please input valid JSON data before proceeding',
-    //   );
-    //   return;
-    // }
+    if (textController.text.trim() == '') {
+      Popup.alert(
+        'Oops!',
+        'Please input valid JSON data before proceeding',
+      );
+      return;
+    }
 
     try {
       Popup.loading(label: 'loading');
 
       /// TODO: remove this line in `PROD`
-      final inputJSONData = selectedOption.value == 'Students'
-          ? MyData.studentsJSON
-          : selectedOption.value == 'Faculties'
-              ? MyData.facultyJSON
-              : selectedOption.value == 'Admins'
-                  ? MyData.adminJSON
-                  : MyData.subjectsJSON;
+      // final inputJSONData = selectedOption.value == 'Students'
+      //     ? MyData.studentsJSON
+      //     : selectedOption.value == 'Faculties'
+      //         ? MyData.facultyJSON
+      //         : selectedOption.value == 'Admins'
+      //             ? MyData.adminJSON
+      //             : MyData.subjectsJSON;
 
-      // TODO: final inputJSONData = json.decode(textController.text);
+      // TODO:
+      final inputJSONData = json.decode(textController.text);
       WriteBatch studentsBatch = fire.batch(); // create BATCH
 
       for (var each in inputJSONData.entries) {
