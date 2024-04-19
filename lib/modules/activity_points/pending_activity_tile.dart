@@ -25,6 +25,8 @@ class PendingActivityTile extends StatelessWidget {
           .collection(FireKeys.activities)
           .doc(activity.id)
           .set({...activity.toMap(), 'status': status.str});
+
+      Popup.snackbar('Activity ${status.str}!', status: true);
     } catch (e) {
       Popup.general();
     }
@@ -42,6 +44,8 @@ class PendingActivityTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Container(
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.only(bottom: 15),
@@ -56,26 +60,30 @@ class PendingActivityTile extends StatelessWidget {
           Text(activity.description, style: AppTStyles.body),
           const NoIndentDivider(),
           SizedBox(
+            width: size.width,
             height: 40,
-            child: Row(
-              children: [
-                FittedBox(
-                  child: MyOutlinedBtn(
-                    activity.fileDetails['name'],
-                    () => Get.to(
-                      () => OnlinePDFViewer(
-                        activity.fileDetails['url'],
-                        activity.fileDetails['name'],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  FittedBox(
+                    child: MyOutlinedBtn(
+                      activity.fileDetails['name'],
+                      () => Get.to(
+                        () => OnlinePDFViewer(
+                          activity.fileDetails['url'],
+                          activity.fileDetails['name'],
+                        ),
                       ),
+                      icon: Icons.file_open_rounded,
                     ),
-                    icon: Icons.file_open_rounded,
                   ),
-                ),
-                const Spacer(),
-                MyChip('${activity.hours} hours'),
-                const SizedBox(width: 10),
-                MyChip('${activity.points} pts')
-              ],
+                  const SizedBox(width: 10),
+                  MyChip('${activity.hours} hours'),
+                  const SizedBox(width: 10),
+                  MyChip('${activity.points} pts')
+                ],
+              ),
             ),
           ),
 

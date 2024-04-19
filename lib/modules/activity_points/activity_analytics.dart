@@ -22,12 +22,8 @@ class ActivityAnalytics extends StatefulWidget {
 class _ActivityAnalyticsState extends State<ActivityAnalytics> {
   //
   final String usn = AppData.fetchData()['usn'];
-  final List<Map<String, dynamic>> statuses = [
-    {'i': 0, 'label': ActivityStatus.approved.str},
-    {'i': 1, 'label': ActivityStatus.pending.str},
-    {'i': 2, 'label': ActivityStatus.rejected.str},
-  ];
-  final selected = 0.obs;
+  final statuses = ['Approved', 'Pending', 'Rejected'];
+  final selected = 'Approved'.obs;
 
   final totalPoints = 0.0.obs;
   final areTotalPoints = false.obs;
@@ -112,9 +108,9 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: statuses
-                      .map((e) => e['i'] == selected.value
-                          ? MyElevatedBtn(e['label'], () {})
-                          : MyOutlinedBtn(e['label'], () => selected(e['i'])))
+                      .map((e) => e == selected()
+                          ? MyElevatedBtn(e, () {})
+                          : MyOutlinedBtn(e, () => selected(e)))
                       .toList(),
                 ),
               ),
@@ -126,6 +122,7 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
                     .collection(FireKeys.students)
                     .doc(usn)
                     .collection(FireKeys.activities)
+                    .where('status', isEqualTo: selected())
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -135,28 +132,16 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
 
                     if (activitySnap == null || activitySnap.docs.isEmpty) {
                       return Popup.nill(
-                        'Oops! No pending activities found!',
-                      );
-                    }
-
-                    final pendingActivityMaps = activitySnap.docs
-                        .map((e) => e.data())
-                        .where((each) =>
-                            each['status'] == statuses[selected.value]['label'])
-                        .toList();
-
-                    if (pendingActivityMaps.isEmpty) {
-                      return Popup.nill(
                         'Oops! No activities found!',
                       );
                     }
 
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: pendingActivityMaps.length,
+                        itemCount: activitySnap.docs.length,
                         itemBuilder: (context, index) {
                           final activity = Activity.fromMap(
-                            pendingActivityMaps[index],
+                            activitySnap.docs[index].data(),
                           );
 
                           return VerifiedActivityTile(activity);

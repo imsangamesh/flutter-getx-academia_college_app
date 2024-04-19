@@ -211,7 +211,7 @@ class Popup {
         ),
         backgroundColor: Colors.transparent,
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-        duration: const Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 4000),
         isDismissible: false,
       ),
     );

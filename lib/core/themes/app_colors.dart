@@ -27,7 +27,7 @@ class AppColors {
       Get.isDarkMode ? const Color(0xfffbedff) : const Color(0xFF03071B);
 
   /// ------------------------------------------------------ `LIGHT THEME`
-  static const lightScaffoldBG = Color(0xfffbedff);
+  static const lightScaffoldBG = Color(0xFFffffff);
   static const lightListTile = Color(0xFFF7DBFF);
 
   /// ------------------------------------------------------ `DARK THEME`

@@ -21,7 +21,7 @@ class ThemeController extends GetxController {
       Get.changeThemeMode(ThemeMode.light);
     }
 
-    log('------------------------- Theme SetUp Complete | isDark: $isDarkMode');
+    log(' - - - - - - Theme SetUp Complete | isDark: $isDarkMode - - - - - - ');
   }
 
   toggleTheme() {

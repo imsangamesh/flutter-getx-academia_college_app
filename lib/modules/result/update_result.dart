@@ -15,20 +15,24 @@ import '../../core/widgets/custom_textfield.dart';
 class UpdateResult extends StatelessWidget {
   UpdateResult({super.key});
 
-  final usnController = TextEditingController(text: '2BA20CS074');
+  final usnController = TextEditingController();
   final studentData = RxMap({});
   final isDataFetched = false.obs;
 
-  final selectedSubject = ''.obs;
   final allSubjects = RxList<String>([]);
+  final selectedSubject = ''.obs;
 
   final selectedExamType = CollegeData.exams.first.obs;
-
   final marksController = TextEditingController();
 
   /// - - - - - - - - - - - - - - - - - - - - `fetch STUDENT data`
   Future<void> getStudentData() async {
     final usn = usnController.text.trim().toUpperCase();
+
+    if (usn.length != 10) {
+      Popup.snackbar('Please provide a valid USN');
+      return;
+    }
 
     Popup.loading(label: 'Fetching student data');
 
@@ -91,7 +95,7 @@ class UpdateResult extends StatelessWidget {
       child: Obx(
         () => Scaffold(
           appBar: AppBar(
-            title: const Text('Student Result Update'),
+            title: const Text('Update Student Result'),
             actions: const [],
           ),
           body: Padding(
@@ -108,7 +112,7 @@ class UpdateResult extends StatelessWidget {
                     1,
                     icon: Icons.numbers_rounded,
                     suffixIcon: Icons.search,
-                    suffixFun: getStudentData,
+                    suffixFun: () => getStudentData(),
                   ),
 
                   /// -------------------------------------- `details TILE`
@@ -135,10 +139,42 @@ class UpdateResult extends StatelessWidget {
   }
 
   updateMarks() async {
-    if (marksController.text.trim() == '') {
+    final marks = marksController.text.trim();
+
+    if (marks == '') {
       Popup.alert(
         'Oops!',
         'Hey, please fill out the marks before you submit.',
+      );
+      return;
+    }
+
+    if (double.tryParse(marks) == null || double.parse(marks) < 0) {
+      Popup.alert(
+        'Oops!',
+        'Hey, please fill out valid marks.',
+      );
+      return;
+    }
+
+    if (selectedExamType() == CollegeData.exams[3] &&
+        double.parse(marks) > 100) {
+      Popup.alert(
+        'Oops!',
+        'Hey, SEE marks should be no greater that 100.',
+      );
+      return;
+    } else if (selectedExamType() == CollegeData.exams[2] &&
+        double.parse(marks) > 10) {
+      Popup.alert(
+        'Oops!',
+        'Hey, Assignment marks should be no greater that 10.',
+      );
+      return;
+    } else if (double.parse(marks) > 20) {
+      Popup.alert(
+        'Oops!',
+        'Hey, CIE marks should be no greater that 20.',
       );
       return;
     }
@@ -152,14 +188,13 @@ class UpdateResult extends StatelessWidget {
           .doc('${studentData['usn']}-${studentData['sem']}')
           .get();
 
-      Map<String, dynamic> allSubData = allSubsSnap.data() ??
-          {
-            selectedSubject(): {},
-          };
+      Map<String, dynamic> allSubData =
+          allSubsSnap.data() ?? {selectedSubject(): {}};
 
       // - - - - - - - - - - - - updating latest marks
+      allSubData[selectedSubject()] = {};
       allSubData[selectedSubject()][selectedExamType()] =
-          marksController.text.trim().toString();
+          (double.tryParse(marks) ?? 0);
 
       await fire
           .collection(FireKeys.result)

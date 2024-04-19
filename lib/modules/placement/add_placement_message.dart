@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:newbie/api/fcm_api.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
 import 'package:newbie/core/helpers/file_controller.dart';
@@ -82,13 +84,13 @@ class AddPlacementMessage extends StatelessWidget {
 
   /// - - - - - - - - - - - - - - - - - - - - - - - - - `SUBMIT`
   uploadAndUpdateMessage() async {
-    // _titleController.text = 'Brand New Title';
-    // _bodyController.text = Dummy.lorem;
+    final title = _titleController.text.trim();
+    final body = _bodyController.text.trim();
 
-    if (_bodyController.text.trim() == '') {
+    if (title == '' || body == '') {
       Popup.alert(
         'Oops!',
-        'Hey, please fill out your new message before you submit.',
+        'Hey, please fill out all the fields before submitting.',
       );
       return;
     }
@@ -109,8 +111,8 @@ class AddPlacementMessage extends StatelessWidget {
 
       final messageModel = PlacementMsgModel(
         id: timeId,
-        title: _titleController.text,
-        description: _bodyController.text,
+        title: title,
+        description: body,
         date: DateTime.now().toIso8601String(),
         year: _currentYear(),
         links: [],
@@ -128,15 +130,18 @@ class AddPlacementMessage extends StatelessWidget {
           .doc(messageModel.id)
           .set(messageModel.toMap());
 
+      await FCMApi.sendPlacemntUpdates(_currentYear(), body);
+
       Popup.terminateLoading();
       Get.back(); // closing message-type screen
-      Popup.snackbar('new message added!', status: true);
+      Popup.snackbar('Message sent successfully!', status: true);
     } on FirebaseException catch (e) {
       Popup.terminateLoading();
       Popup.alert(e.code, e.message.toString());
     } catch (e) {
       Popup.terminateLoading();
       Popup.general();
+      log('ERRORRRR: $e');
     }
   }
 

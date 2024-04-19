@@ -22,7 +22,6 @@ class UpdateCoreData extends StatelessWidget {
 
   /// -------------------------------------- `SUBMIT & UPDATE DATA`
   Future<void> updateDataToFirestore() async {
-    // TODO: Uncomment this
     if (textController.text.trim() == '') {
       Popup.alert(
         'Oops!',
@@ -34,7 +33,6 @@ class UpdateCoreData extends StatelessWidget {
     try {
       Popup.loading(label: 'loading');
 
-      /// TODO: remove this line in `PROD`
       // final inputJSONData = selectedOption.value == 'Students'
       //     ? MyData.studentsJSON
       //     : selectedOption.value == 'Faculties'
@@ -43,7 +41,6 @@ class UpdateCoreData extends StatelessWidget {
       //             ? MyData.adminJSON
       //             : MyData.subjectsJSON;
 
-      // TODO:
       final inputJSONData = json.decode(textController.text);
       WriteBatch studentsBatch = fire.batch(); // create BATCH
 

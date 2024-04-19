@@ -28,7 +28,7 @@ class SigninScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Integrated Student Mgmt App',
+                'Student Mgmt App',
                 style: GoogleFonts.quicksand(
                   textStyle: const TextStyle(
                     fontSize: 20,
@@ -88,7 +88,7 @@ class SigninScreen extends StatelessWidget {
                   children: [
                     const Icon(Icons.account_circle, size: 30),
                     const SizedBox(width: 30),
-                    Text('Sign up with Google', style: AppTStyles.button),
+                    Text('Sign in with Google', style: AppTStyles.button),
                     const SizedBox(width: 50),
                   ],
                 ),

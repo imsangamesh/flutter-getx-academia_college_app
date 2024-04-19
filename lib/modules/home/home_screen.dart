@@ -18,7 +18,6 @@ class HomeScreen extends StatelessWidget {
   //
   String get imageUrl => auth.currentUser!.photoURL ?? MyHelper.profilePic;
   final authController = Get.put(AuthController());
-  final Role role = AppData.fetchRole();
 
   @override
   Widget build(BuildContext context) {
@@ -67,19 +66,19 @@ class HomeScreen extends StatelessWidget {
                 const Divider(),
 
                 /// --------------------------------- `STUDENT`
-                if (role == Role.student) ...[
+                if (AppData.role == Role.student) ...[
                   StudentDashboard(),
                   const Divider(),
                 ],
 
                 /// --------------------------------- `FACULTY`
-                if (role == Role.faculty) ...[
+                if (AppData.role == Role.faculty) ...[
                   const FacultyDashboard(),
                   const Divider(),
                 ],
 
                 /// --------------------------------- `ADMIN`
-                if (role == Role.admin) const AdminDashboard(),
+                if (AppData.role == Role.admin) const AdminDashboard(),
               ],
             ),
           ),

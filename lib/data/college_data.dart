@@ -56,7 +56,8 @@ enum ActivityStatus {
 enum Role {
   student('Student'),
   faculty('Faculty'),
-  admin('Admin');
+  admin('Admin'),
+  parent('Parent');
 
   final String str;
   const Role(this.str);

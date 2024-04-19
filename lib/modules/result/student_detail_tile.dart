@@ -94,6 +94,7 @@ class ResultDetailsTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
+                  flex: 10,
                   child: MyDropDownWrapper(
                     DropdownButton(
                       dropdownColor: AppColors.listTile,
@@ -122,6 +123,7 @@ class ResultDetailsTile extends StatelessWidget {
 
                 /// -------------------------------------- `marks`
                 Expanded(
+                  flex: 7,
                   child: CustomTextField(
                     marksController,
                     'marks',
@@ -129,7 +131,7 @@ class ResultDetailsTile extends StatelessWidget {
                     icon: Icons.numbers_rounded,
                     radius: 10,
                     inputType: TextInputType.number,
-                    maxLength: 3,
+                    maxLength: 4,
                   ),
                 ),
               ],

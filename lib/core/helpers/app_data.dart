@@ -8,13 +8,25 @@ import 'package:newbie/data/college_data.dart';
 import 'package:newbie/modules/auth/signin_screen.dart';
 
 class AppData {
+  AppData._();
   static final _box = GetStorage();
 
-  /// -------------------------------------------- `ROLE`
-  static Future<void> storeRole(Role role) =>
-      _box.write(PrefKeys.role, role.str);
+  /// -------------------------------------------- `GETTERS`
 
-  static Role fetchRole() => Role.fromStr(_box.read(PrefKeys.role));
+  static String get token => _box.read(PrefKeys.token);
+  static Role get role => Role.fromStr(_box.read(PrefKeys.role));
+
+  /// -------------------------------------------- `METHODS`
+
+  static Map<String, dynamic> fetchData() {
+    final userData = _box.read<Map<String, dynamic>>(PrefKeys.userData);
+    if (userData == null) Get.offAll(() => SigninScreen());
+    return userData ?? {};
+  }
+
+  static Future<void> storeRole(Role role) async {
+    _box.write(PrefKeys.role, role.str);
+  }
 
   /// -------------------------------------------- `USER DATA`
   static Future<void> storeUserData(Role role) async {
@@ -29,12 +41,6 @@ class AppData {
     }
 
     await _box.write(PrefKeys.userData, userData);
-    log('------------------------- User Data SetUp Complete | $role');
-  }
-
-  static Map<String, dynamic> fetchData() {
-    final userData = _box.read<Map<String, dynamic>>(PrefKeys.userData);
-    if (userData == null) Get.to(() => SigninScreen());
-    return userData ?? {};
+    log(' - - - - - - USER DATA set-up Complete | $role - - - - - - ');
   }
 }

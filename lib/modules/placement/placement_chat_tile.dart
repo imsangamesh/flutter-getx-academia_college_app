@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
+import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
@@ -113,7 +114,7 @@ class AttachmentsRow extends StatelessWidget {
       child: Row(
         children: [
           // ------------------------------ DELETE Button
-          if (role == Role.admin)
+          if (AppData.role == Role.admin)
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: MyIconBtn(

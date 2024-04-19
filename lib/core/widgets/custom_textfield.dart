@@ -32,6 +32,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         keyboardType: inputType ?? TextInputType.text,
         decoration: InputDecoration(
+          alignLabelWithHint: true,
           counterText: '', // removes the below `maxLength` counter
           labelText: label,
           fillColor: AppColors.listTile,
@@ -72,6 +73,7 @@ class CustomTextField extends StatelessWidget {
         controller: titleController,
         maxLines: maxLines,
         maxLength: maxLength,
+        onTapOutside: (_) => FocusScope.of(context).unfocus(),
       ),
     );
   }

@@ -124,13 +124,22 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
           .collection(FireKeys.result)
           .doc('$usn-${selectedSem()}')
           .get();
-      final subData = subSnap.data() ?? {};
+      final subData = subSnap.data();
+
+      if (subData == null) {
+        Popup.alert(
+          'Oops!',
+          'There are no subjects for the selected semester!',
+        );
+        return;
+      }
 
       subjectsData(subData);
       configureGraphData();
     } on FirebaseException catch (e) {
       Popup.alert(e.code, e.message.toString());
     } catch (e) {
+      log(e.toString());
       Popup.general();
     }
   }
@@ -144,7 +153,12 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
       final List<GraphData> dataList = [];
 
       for (var eachSub in subjectsData.entries) {
-        dataList.add(GraphData(eachSub.key, eachSub.value[eachType] ?? 0.0));
+        dataList.add(
+          GraphData(
+            eachSub.key,
+            double.tryParse(eachSub.value[eachType].toString()) ?? 0,
+          ),
+        );
       }
 
       finalGraphData[eachType] = dataList;
@@ -180,7 +194,7 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                /// -------------------------------------- `semester`
+                /// -------------------------------------- `SEMESTER SELECTOR`
                 if (areSemsFetched())
                   Padding(
                     padding: const EdgeInsets.all(10),

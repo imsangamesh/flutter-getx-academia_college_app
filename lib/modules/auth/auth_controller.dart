@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:newbie/api/fcm_noti_controller.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
 import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/utils/popup.dart';
@@ -49,28 +50,37 @@ class AuthController extends GetxController {
         return;
       }
 
-      /// -------------------- `SET-UP USER`
+      // --------------------------- SETTING UP USER ---------------------------
+
+      /// `USER`
       await _box.write(PrefKeys.isUser, true); // set user
       await AppData.storeRole(role); // set role
       await AppData.storeUserData(role); // set user data
 
-      // Set Theme
+      /// `THEME`
       final themeController = Get.put(ThemeController());
       themeController.configureTheme();
+
+      /// `NOTIFICATIONS`
+      final fcmController = Get.put(FCMNotiController());
+      await fcmController.init();
+
+      // -----------------------------------------------------------------------
 
       Get.offAll(() => HomeScreen());
       Popup.snackbar('Login Successful!', status: true);
       //
     } on FirebaseAuthException catch (e) {
       Get.back();
-      Popup.alert('Firebase Err', e.message.toString());
+      Popup.alert('Firebase Error', e.message.toString());
     } catch (e) {
       Get.back();
       if (e.toString() == 'Null check operator used on a null value') {
         Popup.snackbar('Please select your email to proceed!');
       } else {
-        Popup.alert('Oops', e.toString());
+        Popup.alert('Login Error', e.toString());
       }
+      await logout();
     }
   }
 
@@ -129,15 +139,14 @@ class AuthController extends GetxController {
   logout() async {
     try {
       //
-      log('------------------- ERASED DATA & Logged out -------------------');
       await GoogleSignIn().signOut();
       await auth.signOut();
-      _box.erase();
-      _box.write(PrefKeys.isUser, false);
+      await _box.erase();
+      log(' - - - - - - ERASED DATA & LOGGED OUT - - - - - - ');
       Get.offAll(() => SigninScreen());
       //
     } catch (e) {
-      log('------------------- couldn\'t logout -------------------');
+      log(' - - - - - - LOGOUT ERROR - - - - - - ');
       log('LOGOUT ERROR: $e');
     }
   }

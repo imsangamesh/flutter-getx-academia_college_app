@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
+import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/helpers/file_controller.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/models/activity_model.dart';
@@ -17,9 +18,8 @@ import '../../core/widgets/my_buttons.dart';
 class AddNewActivity extends StatelessWidget {
   AddNewActivity({super.key});
 
-  // TODO: Remove these hardcoded
-  final descController = TextEditingController(text: Dummy.lorem);
-  final hoursController = TextEditingController(text: '40');
+  final descController = TextEditingController();
+  final hoursController = TextEditingController();
 
   final Rx<File> file = File('').obs;
   final RxMap<String, dynamic> fileDetails = RxMap();
@@ -69,8 +69,7 @@ class AddNewActivity extends StatelessWidget {
       }
 
       Popup.loading(label: 'Updating Activity');
-      // TODO: final usn = AppData.fetchData()['usn'];
-      const usn = '2BA20CS074';
+      final usn = AppData.fetchData()['usn'];
 
       final studentData = await MyHelper.fetchStudentMap();
       studentData['pendingActivities'] += 1;
@@ -80,7 +79,7 @@ class AddNewActivity extends StatelessWidget {
         description: descController.text.trim(),
         fileDetails: fileDetails,
         hours: int.parse(hoursController.text.trim()),
-        status: 'pending',
+        status: 'Pending',
         points: int.parse(hoursController.text.trim()) / 4,
       );
 

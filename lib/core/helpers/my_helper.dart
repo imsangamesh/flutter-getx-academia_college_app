@@ -5,6 +5,7 @@ import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/data/college_data.dart';
 
 class MyHelper {
+  MyHelper._();
   //
   static Size scrSize(BuildContext context) => MediaQuery.of(context).size;
 

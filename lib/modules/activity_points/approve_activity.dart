@@ -40,7 +40,6 @@ class _ApproveActivityState extends State<ApproveActivity> {
           .map((each) => each['usn'].toString())
           .toSet()
           .toList();
-      // TODO: replace the hard-coded faculty-email above
 
       log(stdUSNList.toString());
       studentUSNList(stdUSNList);

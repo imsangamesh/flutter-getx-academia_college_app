@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
+import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/placement_msg_model.dart';
@@ -22,7 +23,7 @@ class PlacementChatPage extends StatelessWidget {
             .collection(FireKeys.placementMsgs)
             .doc(year)
             .collection(FireKeys.messages)
-            .orderBy('createdAt')
+            .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,12 +50,12 @@ class PlacementChatPage extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: role == Role.admin
-          ? FloatingActionButton.extended(
+      floatingActionButton: AppData.role != Role.admin
+          ? null
+          : FloatingActionButton.extended(
               onPressed: () => Get.to(() => AddPlacementMessage()),
               label: const Text('new'),
-            )
-          : null,
+            ),
     );
   }
 }
