@@ -70,6 +70,8 @@ enum Role {
         return Role.faculty;
       case 'Admin':
         return Role.admin;
+      case 'Parent':
+        return Role.parent;
       default:
         return Role.student;
     }

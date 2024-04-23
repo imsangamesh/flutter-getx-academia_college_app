@@ -7,7 +7,6 @@ class PrefKeys {
 }
 
 class FireKeys {
-  static const parentTokens = 'PARENT_TOKENS';
   static const students = 'STUDENTS';
   static const activities = 'ACTIVITIES';
 
@@ -24,4 +23,6 @@ class FireKeys {
 
 class FCMTitles {
   static const placement = 'Your Placement Updates';
+  static const result = 'Student Result Updates';
+  static const attendance = 'Student Attendance Updates';
 }

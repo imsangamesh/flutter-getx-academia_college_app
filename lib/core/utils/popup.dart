@@ -203,7 +203,7 @@ class Popup {
               message,
               style: AppTStyles.smallCaption.copyWith(
                 overflow: TextOverflow.ellipsis,
-                color: AppColors.darkScaffoldBG,
+                color: AppColors.dScaffoldBG,
               ),
               textAlign: TextAlign.center,
             ),
@@ -239,16 +239,15 @@ class Popup {
                         color: AppColors.prim,
                         border: Border(
                           top: BorderSide(
-                              color: AppColors.darkScaffoldBG, width: 2),
+                              color: AppColors.dScaffoldBG, width: 2),
                           bottom: BorderSide(
-                              color: AppColors.darkScaffoldBG, width: 2.5),
+                              color: AppColors.dScaffoldBG, width: 2.5),
                         ),
                       ),
                       child: Center(
                         child: Text(
                           label,
-                          style:
-                              const TextStyle(color: AppColors.darkScaffoldBG),
+                          style: const TextStyle(color: AppColors.dScaffoldBG),
                         ),
                       ),
                     ),
@@ -327,4 +326,24 @@ class Popup {
 
   /// ---------------------------------------------------------- `terminate loading`
   static void terminateLoading() => Get.close(1);
+
+  /// ---------------------------------------------------------- `CAUTION MESSAGE`
+  static Widget caution() => const Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.crisis_alert,
+            size: 16,
+            color: AppColors.danger,
+          ),
+          Text(
+            ' This process is irreversible! Please proceed with caution!',
+            style: TextStyle(
+              fontSize: 12,
+              color: AppColors.danger,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      );
 }

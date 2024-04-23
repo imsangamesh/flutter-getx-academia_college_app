@@ -64,6 +64,22 @@ class MyHelper {
     }
   }
 
+  static Future<Map<String, dynamic>> fetchStudentParentMap() async {
+    try {
+      final email = auth.currentUser!.email;
+
+      final studentsData = await fire.collection(FireKeys.students).get();
+      final studentMap = studentsData.docs
+          .map((e) => e.data())
+          .firstWhere((stdMap) => stdMap['parentEmail'] == email);
+
+      return studentMap;
+    } catch (e) {
+      Popup.alert('Oops!', 'Error while fetching core parent & student data!');
+      return {};
+    }
+  }
+
   static Future<Map<String, dynamic>> fetchFacultyMap() async {
     try {
       final email = auth.currentUser!.email;

@@ -54,7 +54,7 @@ class AddAdminJson extends StatelessWidget {
               child: CustomTextField(
                 adminController,
                 'admins json',
-                50,
+                maxLines: 50,
               ),
             ),
             SizedBox(

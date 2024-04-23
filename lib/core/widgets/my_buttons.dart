@@ -142,10 +142,10 @@ class MyElevatedBtn extends StatelessWidget {
       return ElevatedButton(
         onPressed: ontap,
         style: ElevatedButton.styleFrom(
+          disabledBackgroundColor: AppColors.grey.withOpacity(0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius ?? 10),
           ),
-          side: const BorderSide(width: 1, color: AppColors.prim),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         ),
         child: Text(label, style: AppTStyles.elevatedButton),
@@ -158,10 +158,10 @@ class MyElevatedBtn extends StatelessWidget {
       icon: Icon(icon, color: AppColors.elevatedButton),
       label: Text(label, style: AppTStyles.elevatedButton),
       style: ElevatedButton.styleFrom(
+        disabledBackgroundColor: AppColors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius ?? 10),
         ),
-        side: const BorderSide(width: 1, color: AppColors.prim),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7.5),
       ),
     );

@@ -37,7 +37,13 @@ class PlacementChatTile extends StatelessWidget {
           // ---------------------- title
           Padding(
             padding: const EdgeInsets.only(right: 15),
-            child: Text(msgModel.title, style: AppTStyles.button),
+            child: Text(
+              msgModel.title,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 15),

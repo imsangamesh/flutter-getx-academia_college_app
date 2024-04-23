@@ -126,7 +126,6 @@ class AddNewActivity extends StatelessWidget {
                           child: CustomTextField(
                             hoursController,
                             'hours',
-                            1,
                             icon: Icons.alarm,
                             radius: 10,
                             inputType: TextInputType.number,
@@ -154,7 +153,7 @@ class AddNewActivity extends StatelessWidget {
                   CustomTextField(
                     descController,
                     'description',
-                    20,
+                    maxLines: 20,
                   ),
 
                   SizedBox(

@@ -5,8 +5,8 @@ import '../themes/app_colors.dart';
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
     this.titleController,
-    this.label,
-    this.maxLines, {
+    this.label, {
+    this.maxLines = 1,
     this.icon,
     this.suffixIcon,
     this.suffixFun,

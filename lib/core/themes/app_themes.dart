@@ -4,6 +4,8 @@ import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 
 class AppTheme {
+  AppTheme._();
+
   /// *============================== `LIGHT` =============================
   /// *============================== `LIGHT` =============================
   /// *============================== `LIGHT` =============================
@@ -12,26 +14,30 @@ class AppTheme {
     /// ----------------------------------------------------- `CORE`
     splashColor: AppColors.prim.withAlpha(150),
     colorScheme: const ColorScheme.light(primary: AppColors.prim),
-    scaffoldBackgroundColor: AppColors.lightScaffoldBG,
+    scaffoldBackgroundColor: AppColors.lScaffoldBG,
 
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.prim,
       extendedTextStyle: AppTStyles.button,
     ),
     drawerTheme: const DrawerThemeData(
-      backgroundColor: AppColors.lightScaffoldBG,
+      backgroundColor: AppColors.lScaffoldBG,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColors.lightScaffoldBG,
+      backgroundColor: AppColors.lScaffoldBG,
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: AppColors.lightScaffoldBG,
+      backgroundColor: AppColors.lScaffoldBG,
     ),
 
     /// ----------------------------------------------------- `APPBAR`
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme().copyWith(
       titleTextStyle: AppTStyles.appbar,
       centerTitle: true,
+      iconTheme: const IconThemeData(color: AppColors.prim, size: 24),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      titleSpacing: 0,
     ),
 
     /// ----------------------------------------------------- `LIST TILE`
@@ -39,7 +45,7 @@ class AppTheme {
       textColor: AppColors.mid,
       iconColor: AppColors.mid,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      tileColor: AppColors.lightListTile,
+      tileColor: AppColors.lListTile,
     ),
 
     /// ----------------------------------------------------- `EXPANSION LIST TILE`
@@ -50,7 +56,7 @@ class AppTheme {
       collapsedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      collapsedBackgroundColor: AppColors.lightListTile,
+      collapsedBackgroundColor: AppColors.lListTile,
     ),
 
     /// ----------------------------------------------------- `INPUT FIELD`
@@ -68,6 +74,13 @@ class AppTheme {
       space: 30,
       indent: 10,
       endIndent: 10,
+    ),
+
+    chipTheme: ChipThemeData(
+      backgroundColor: AppColors.prim.withAlpha(50),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     ),
 
     /// ----------------------------------------------------- `TEXT`
@@ -93,26 +106,30 @@ class AppTheme {
     /// ----------------------------------------------------- `CORE`
     splashColor: AppColors.mid.withAlpha(100),
     colorScheme: const ColorScheme.dark(primary: AppColors.prim),
-    scaffoldBackgroundColor: AppColors.darkScaffoldBG,
+    scaffoldBackgroundColor: AppColors.dScaffoldBG,
 
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: AppColors.prim,
       extendedTextStyle: AppTStyles.button,
     ),
     drawerTheme: const DrawerThemeData(
-      backgroundColor: AppColors.darkScaffoldBG,
+      backgroundColor: AppColors.dScaffoldBG,
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      backgroundColor: AppColors.darkScaffoldBG,
+      backgroundColor: AppColors.dScaffoldBG,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: AppColors.darkScaffoldBG,
+      backgroundColor: AppColors.dScaffoldBG,
     ),
 
     /// ----------------------------------------------------- `APPBAR`
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme().copyWith(
       titleTextStyle: AppTStyles.appbar,
       centerTitle: true,
+      iconTheme: const IconThemeData(color: AppColors.prim, size: 24),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      titleSpacing: 0,
     ),
 
     /// ----------------------------------------------------- `LIST TILE`
@@ -120,7 +137,7 @@ class AppTheme {
       textColor: AppColors.mid,
       iconColor: AppColors.mid,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      tileColor: AppColors.darkListTile,
+      tileColor: AppColors.dListTile,
     ),
 
     /// ----------------------------------------------------- `EXPANSION LIST TILE`
@@ -131,7 +148,7 @@ class AppTheme {
       collapsedShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      collapsedBackgroundColor: AppColors.darkListTile,
+      collapsedBackgroundColor: AppColors.dListTile,
     ),
 
     /// ----------------------------------------------------- `INPUT FIELD`
@@ -149,6 +166,13 @@ class AppTheme {
       space: 30,
       indent: 10,
       endIndent: 10,
+    ),
+
+    chipTheme: ChipThemeData(
+      backgroundColor: AppColors.dScaffoldBG.withOpacity(0.4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     ),
 
     /// ----------------------------------------------------- `TEXT`

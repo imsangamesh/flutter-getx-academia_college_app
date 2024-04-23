@@ -9,7 +9,9 @@ import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/modules/attendence/attendance_analysis_tile.dart';
 
 class StudentAttendanceAnalytics extends StatefulWidget {
-  const StudentAttendanceAnalytics({super.key});
+  const StudentAttendanceAnalytics({this.isParent = false, super.key});
+
+  final bool isParent;
 
   @override
   State<StudentAttendanceAnalytics> createState() =>
@@ -74,7 +76,10 @@ class _StudentAttendanceAnalyticsState
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: AppBar(title: const Text('My Attendance')),
+        appBar: AppBar(
+            title: widget.isParent
+                ? const Text('Student\'s Attendance')
+                : const Text('My Attendance')),
         body: areSubjectsSet()
             ? SingleChildScrollView(
                 child: Padding(

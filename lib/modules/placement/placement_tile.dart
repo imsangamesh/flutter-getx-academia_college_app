@@ -15,7 +15,6 @@ class PlacementTile extends StatelessWidget {
         dividerColor: Colors.transparent,
       ),
       child: ExpansionTile(
-        initiallyExpanded: true,
         childrenPadding: const EdgeInsets.only(top: 5),
         expandedAlignment: Alignment.centerLeft,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,

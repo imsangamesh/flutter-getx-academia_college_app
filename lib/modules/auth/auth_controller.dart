@@ -67,7 +67,7 @@ class AuthController extends GetxController {
 
       // -----------------------------------------------------------------------
 
-      Get.offAll(() => HomeScreen());
+      Get.offAll(() => const HomeScreen());
       Popup.snackbar('Login Successful!', status: true);
       //
     } on FirebaseAuthException catch (e) {
@@ -103,10 +103,10 @@ class AuthController extends GetxController {
     } else if (role == Role.faculty) {
       /// ----------------------------------------- `FACULTY`
       //
-      final validStudentsData = await fire.collection(FireKeys.faculties).get();
-
+      final validFacultiesData =
+          await fire.collection(FireKeys.faculties).get();
       final validUsersList =
-          validStudentsData.docs.map((e) => e.data()['email']).toList();
+          validFacultiesData.docs.map((e) => e.data()['email']).toList();
 
       if (!validUsersList.contains(userEmail)) {
         GoogleSignIn().signOut();
@@ -119,10 +119,9 @@ class AuthController extends GetxController {
     } else if (role == Role.admin) {
       /// ----------------------------------------- `ADMIN`
       //
-      final validStudentsData = await fire.collection(FireKeys.admins).get();
-
+      final validAdminsData = await fire.collection(FireKeys.admins).get();
       final validUsersList =
-          validStudentsData.docs.map((e) => e.data()['email']).toList();
+          validAdminsData.docs.map((e) => e.data()['email']).toList();
 
       if (!validUsersList.contains(userEmail)) {
         GoogleSignIn().signOut();
@@ -132,11 +131,26 @@ class AuthController extends GetxController {
         );
         return false;
       }
+    } else if (role == Role.parent) {
+      /// ----------------------------------------- `PARENT`
+      //
+      final validStudentsData = await fire.collection(FireKeys.students).get();
+      final validUsersList =
+          validStudentsData.docs.map((e) => e.data()['parentEmail']).toList();
+
+      if (!validUsersList.contains(userEmail)) {
+        GoogleSignIn().signOut();
+        Popup.alert(
+          'Oops!',
+          'Selected email is not authorised for "Parent" role. please check your email & try again.',
+        );
+        return false;
+      }
     }
     return true; // if email is valid, we'll come out of IF_Block
   }
 
-  logout() async {
+  Future<void> logout() async {
     try {
       //
       await GoogleSignIn().signOut();

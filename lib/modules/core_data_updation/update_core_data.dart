@@ -101,7 +101,7 @@ class UpdateCoreData extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Core JSON Data'),
+        title: const Text('Update JSON Data'),
         actions: [
           IconButton(
             onPressed: uploadResultData,

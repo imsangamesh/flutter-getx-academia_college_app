@@ -14,20 +14,18 @@ import 'core/themes/theme_controller.dart';
 import 'modules/auth/auth_controller.dart';
 import 'modules/auth/signin_screen.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  log(' - - - - - - BACKGROUND MESSAGE ! - - - - - - ');
+  log(message.notification!.title.toString());
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.getInitialMessage();
-  FirebaseMessaging.onBackgroundMessage((message) async {
-    log(' - - - - - - BACKGROUND MESSAGE ! - - - - - - ');
-    log(message.notification!.title.toString());
-  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  startApp();
-}
-
-Future<void> startApp() async {
   final fcmController = Get.put(FCMNotiController());
   final authController = Get.put(AuthController());
   final themeController = Get.put(ThemeController());
@@ -37,7 +35,7 @@ Future<void> startApp() async {
 
   if (authController.isUserPresent && auth.currentUser != null) {
     log(' - - - - - - user ID: ${auth.currentUser!.uid} - - - - - - ');
-    runApp(MyApp(HomeScreen()));
+    runApp(const MyApp(HomeScreen()));
   } else {
     runApp(MyApp(SigninScreen()));
   }
@@ -68,10 +66,5 @@ class MyApp extends StatelessWidget {
 /*
 
 parent module
-dark theming
-ui update
-
-
-student profile screen
 
 */

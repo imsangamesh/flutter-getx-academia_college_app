@@ -127,7 +127,6 @@ class ResultDetailsTile extends StatelessWidget {
                   child: CustomTextField(
                     marksController,
                     'marks',
-                    1,
                     icon: Icons.numbers_rounded,
                     radius: 10,
                     inputType: TextInputType.number,

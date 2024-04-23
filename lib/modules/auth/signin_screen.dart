@@ -13,7 +13,7 @@ class SigninScreen extends StatelessWidget {
   SigninScreen({super.key});
 
   final authController = Get.find<AuthController>();
-  final roles = ['Student', 'Faculty', 'Admin'];
+  final roles = ['Student', 'Faculty', 'Admin', 'Parent'];
   final selectedRole = 'Student'.obs;
 
   @override
@@ -28,7 +28,7 @@ class SigninScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Student Mgmt App',
+                'Student Management App',
                 style: GoogleFonts.quicksand(
                   textStyle: const TextStyle(
                     fontSize: 20,
@@ -43,7 +43,7 @@ class SigninScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              /// -------------------------------------- `department`
+              /// -------------------------------------- `ROLE SELECTOR`
               Padding(
                 padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
                 child: MyDropDownWrapper(

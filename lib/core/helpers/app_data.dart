@@ -38,6 +38,8 @@ class AppData {
       userData = await MyHelper.fetchFacultyMap();
     } else if (role == Role.admin) {
       userData = await MyHelper.fetchAdminMap();
+    } else if (role == Role.parent) {
+      userData = await MyHelper.fetchStudentParentMap();
     }
 
     await _box.write(PrefKeys.userData, userData);

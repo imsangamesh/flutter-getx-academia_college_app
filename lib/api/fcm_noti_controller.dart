@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,7 +12,9 @@ import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/helpers/my_helper.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/data/college_data.dart';
+import 'package:newbie/modules/attendence/student_attendence_analytics.dart';
 import 'package:newbie/modules/placement/placement_chat_page.dart';
+import 'package:newbie/modules/result/result_analytics.dart';
 
 class FCMNotiController extends GetxController {
   final _fcm = FirebaseMessaging.instance;
@@ -28,10 +29,20 @@ class FCMNotiController extends GetxController {
   }
 
   Future<void> navigate(String? payload) async {
-    // PLACEMENT UPDATES
+    /// `PLACEMENT`
     if (payload == FCMTitles.placement) {
       final year = MyHelper.semToYear(AppData.fetchData()['sem']);
       Get.to(() => PlacementChatPage(year));
+    }
+
+    /// `RESULT`
+    if (payload == FCMTitles.result) {
+      Get.to(() => const ResultAnalytics());
+    }
+
+    /// `Attendance`
+    if (payload == FCMTitles.attendance) {
+      Get.to(() => const StudentAttendanceAnalytics());
     }
   }
 
@@ -86,20 +97,6 @@ class FCMNotiController extends GetxController {
       },
     );
 
-    final details = await _flutterLocalNotificationsPlugin
-        .getNotificationAppLaunchDetails();
-    if (details != null && details.didNotificationLaunchApp) {
-      log(' - - - - - - didNotificationLaunchApp - - - - - - ');
-      log('PAYLOAD: ${details.notificationResponse?.payload}');
-      log(' - - - - - - didNotificationLaunchApp END - - - - - - ');
-    }
-
-    FirebaseMessaging.onBackgroundMessage((message) async {
-      log(' - - - - - - onBackgroundMessage - - - - - - ');
-      log(message.toString());
-      log(' - - - - - - onBackgroundMessage END - - - - - - ');
-    });
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       log(' - - - - - - ON_MESSAGE RECEIVED - - - - - - ');
       log('Title: ${message.notification?.title}');
@@ -151,7 +148,7 @@ class FCMNotiController extends GetxController {
       });
     } else if (AppData.role == Role.parent) {
       await fire.collection(FireKeys.students).doc(usn).update({
-        'parent_token': token,
+        'parentToken': token,
       });
     }
 
@@ -172,36 +169,5 @@ class FCMNotiController extends GetxController {
     } else {
       log(' - - - - - - Notification permission DENIED! - - - - - - ');
     }
-  }
-}
-
-// try {
-//   if (details.payload != null && details.payload!.isNotEmpty) {
-//     log(' - - - - - - onDidReceiveNotificationResponse - - - - - - ');
-//     // ---------- Navigate to PLACEMENT UPDATES
-//     // if (message.notification!.title == FCMTitles.placement) {
-//     // final year = MyHelper.semToYear(AppData.fetchData()['sem']);
-//     // Get.to(() => Placeme ntChatPage(year));
-//     // }
-//     Get.to(() => Dummyyyy(details.payload));
-//   }
-// } catch (e) {
-//   log('ERROR IN onMessage listener: $e');
-// }
-
-enum NotiType {
-  placement(1);
-
-  final int id;
-  const NotiType(this.id);
-}
-
-class Dummyyyy extends StatelessWidget {
-  const Dummyyyy(this.title, {super.key});
-  final dynamic title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text(title.toString())));
   }
 }

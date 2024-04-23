@@ -7,18 +7,15 @@ import 'package:newbie/core/helpers/my_helper.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/themes/theme_controller.dart';
-import 'package:newbie/modules/activity_points/activity_analytics.dart';
-import 'package:newbie/modules/activity_points/upload_new_activity.dart';
 import 'package:newbie/modules/attendence/student_attendence_analytics.dart';
 import 'package:newbie/modules/auth/auth_controller.dart';
 import 'package:newbie/modules/dashboard/widgets/home_helpers.dart';
-import 'package:newbie/modules/placement/placement_chat_page.dart';
 import 'package:newbie/modules/result/result_analytics.dart';
 
 import '../../core/widgets/my_buttons.dart';
 
-class StudentDashboard extends StatelessWidget {
-  StudentDashboard({super.key});
+class ParentDashboard extends StatelessWidget {
+  ParentDashboard({super.key});
 
   final Map<String, dynamic> studentData = AppData.fetchData();
   final authController = Get.put(AuthController());
@@ -45,9 +42,15 @@ class StudentDashboard extends StatelessWidget {
             ],
           ),
 
-          /// --------------------------------- `ABOUT ME CHIPS`
+          /// --------------------------------- `ABOUT STUDENT CHIPS`
           const Divider(),
+          Text(
+            data['parentEmail'],
+            textAlign: TextAlign.center,
+            style: AppTStyles.subHeading.copyWith(),
+          ),
 
+          const Divider(),
           Text(
             data['name'],
             textAlign: TextAlign.center,
@@ -72,17 +75,14 @@ class StudentDashboard extends StatelessWidget {
               Chip(label: Text('${data['div']} div')),
             ],
           ),
+
           const Divider(),
 
           MyElevatedBtn(
-            '$currentYear Placement Updates',
-            () => Get.to(() => PlacementChatPage(currentYear)),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
             'Attendance Analysis',
-            () => Get.to(() => const StudentAttendanceAnalytics()),
+            () => Get.to(
+              () => const StudentAttendanceAnalytics(isParent: true),
+            ),
           ),
           //
           const SizedBox(height: 15),
@@ -91,17 +91,6 @@ class StudentDashboard extends StatelessWidget {
             () => Get.to(() => const ResultAnalytics()),
           ),
           //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Upload New Activity',
-            () => Get.to(() => AddNewActivity()),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Activity Analysis',
-            () => Get.to(() => const ActivityAnalytics()),
-          ),
           const SizedBox(height: 15),
           MyOutlinedBtn('Notify', () {
             FCMApi.sendPlacemntUpdates('Final Year', 'This is the dummy body!');

@@ -4,30 +4,39 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 
 class AppTStyles {
-  /// `15`
+  static const TextStyle tinyCaption = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w500,
+  );
+
   static const TextStyle smallCaption = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: AppColors.mid,
   );
 
-  /// `15`
   static const TextStyle kTS15Md = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.bold,
   );
 
-  /// `HEADING`
-  static TextStyle heading = GoogleFonts.quicksand(
+  static TextStyle subHeading = GoogleFonts.quicksand(
     textStyle: const TextStyle(
-      fontSize: 20,
+      fontSize: 16.5,
       fontWeight: FontWeight.bold,
     ),
   );
 
-  static TextStyle subHeading = GoogleFonts.quicksand(
+  static TextStyle get primary => const TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w500,
+        color: AppColors.prim,
+      );
+
+  /// `HEADING`
+  static TextStyle heading = GoogleFonts.quicksand(
     textStyle: const TextStyle(
-      fontSize: 18,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
   );
@@ -40,7 +49,7 @@ class AppTStyles {
   /// `APPBAR`
   static TextStyle appbar = GoogleFonts.quicksand(
     textStyle: const TextStyle(
-      color: AppColors.darkScaffoldBG,
+      color: AppColors.prim,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
@@ -50,7 +59,7 @@ class AppTStyles {
   static TextStyle button = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: Get.isDarkMode ? AppColors.prim : AppColors.darkScaffoldBG,
+    color: Get.isDarkMode ? AppColors.prim : AppColors.dScaffoldBG,
   );
 
   static const TextStyle outlineButton = TextStyle(
@@ -62,7 +71,7 @@ class AppTStyles {
   static const TextStyle elevatedButton = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w700,
-    color: AppColors.darkScaffoldBG,
+    color: AppColors.dScaffoldBG,
   );
 }
 
