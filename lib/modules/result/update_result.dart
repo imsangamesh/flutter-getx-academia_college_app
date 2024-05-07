@@ -98,7 +98,6 @@ class UpdateResultScreen extends StatelessWidget {
       );
       return;
     }
-
     if (double.tryParse(marks) == null || double.parse(marks) < 0) {
       Popup.alert(
         'Oops!',
@@ -107,22 +106,29 @@ class UpdateResultScreen extends StatelessWidget {
       return;
     }
 
-    if (examType == CollegeData.exams[3] && double.parse(marks) > 100) {
+    final validMarks = double.parse(marks);
+
+    if ((examType == CollegeData.exams[0] ||
+            examType == CollegeData.exams[1]) &&
+        validMarks > 20) {
+      // CIE MARKS
       Popup.alert(
         'Oops!',
-        'SEE marks should be no greater that 100.',
+        'CIE marks should be no greater than 20.',
       );
       return;
-    } else if (examType == CollegeData.exams[2] && double.parse(marks) > 10) {
+    } else if (examType == CollegeData.exams[2] && validMarks > 10) {
+      // ASSIGNMENT MARKS
       Popup.alert(
         'Oops!',
-        'Assignment marks should be no greater that 10.',
+        'Assignment marks should be no greater than 10.',
       );
       return;
-    } else if (double.parse(marks) > 20) {
+    } else if (examType == CollegeData.exams[3] && validMarks > 100) {
+      // SEE MARKS
       Popup.alert(
         'Oops!',
-        'CIE marks should be no greater that 20.',
+        'SEE marks should be no greater than 100.',
       );
       return;
     }

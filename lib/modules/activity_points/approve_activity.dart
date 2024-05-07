@@ -11,7 +11,6 @@ import 'package:newbie/core/widgets/my_buttons.dart';
 import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/activity_model.dart';
 import 'package:newbie/modules/activity_points/pending_activity_tile.dart';
-import 'package:newbie/modules/activity_points/upload_new_activity.dart';
 
 import '../../core/widgets/my_dropdown_wrapper.dart';
 
@@ -61,15 +60,7 @@ class _ApproveActivityState extends State<ApproveActivity> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: AppBar(
-          title: const Text('Approve Activity'),
-          actions: [
-            IconButton(
-              onPressed: () => Get.to(() => AddNewActivity()),
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
+        appBar: AppBar(title: const Text('Approve Activity')),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(

@@ -44,25 +44,29 @@ class VerifiedActivityTile extends StatelessWidget {
                 /// ---------------- `details ROW`
                 SizedBox(
                   height: 40,
-                  child: Row(
-                    children: [
-                      FittedBox(
-                        child: MyOutlinedBtn(
-                          activity.fileDetails['name'],
-                          () => Get.to(
-                            () => OnlinePDFViewer(
-                              activity.fileDetails['url'],
-                              activity.fileDetails['name'],
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        MyChip('${activity.hours} hours'),
+                        const SizedBox(width: 10),
+                        MyChip('${activity.points} pts'),
+                        const SizedBox(width: 10),
+                        FittedBox(
+                          child: MyOutlinedBtn(
+                            activity.fileDetails['name'],
+                            () => Get.to(
+                              () => OnlinePDFViewer(
+                                activity.fileDetails['url'],
+                                activity.fileDetails['name'],
+                              ),
                             ),
+                            icon: Icons.file_open_rounded,
                           ),
-                          icon: Icons.file_open_rounded,
                         ),
-                      ),
-                      const Spacer(),
-                      MyChip('${activity.hours} hours'),
-                      const SizedBox(width: 10),
-                      MyChip('${activity.points} pts')
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

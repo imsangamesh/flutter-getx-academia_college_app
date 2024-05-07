@@ -333,7 +333,7 @@ class Popup {
         children: [
           Icon(
             Icons.crisis_alert,
-            size: 16,
+            size: 18,
             color: AppColors.danger,
           ),
           Text(

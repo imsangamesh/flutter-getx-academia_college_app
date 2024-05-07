@@ -129,6 +129,7 @@ class AddNewActivity extends StatelessWidget {
                             icon: Icons.alarm,
                             radius: 10,
                             inputType: TextInputType.number,
+                            maxLength: 2,
                           ),
                         ),
                         const SizedBox(width: 15),

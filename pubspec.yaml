@@ -15,7 +15,7 @@ dependencies:
 
   get: ^4.6.5
   intl: ^0.18.1
-  google_fonts: ^6.1.0
+  google_fonts: 6.1.0
   get_storage: ^2.1.1
 
   firebase_core: 2.16.0
@@ -28,17 +28,11 @@ dependencies:
   open_file: ^3.3.2
   image_picker: ^1.0.4
   uuid: ^3.0.5
-  path_provider: ^2.1.1
-  dio: ^5.3.3
   syncfusion_flutter_pdfviewer: ^23.1.36
-  permission_handler: ^11.0.0
-  # flutter_webview_plugin: ^0.4.0
-  syncfusion_flutter_charts: ^23.1.38
-  flutter_inappwebview: ^5.7.2+3
-  image_cropper: ^5.0.0
   flutter_local_notifications: ^17.0.1
   firebase_messaging: ^14.6.8
   http: ^1.1.0
+  syncfusion_flutter_charts: ^23.2.7
 
 dev_dependencies:
   flutter_test:

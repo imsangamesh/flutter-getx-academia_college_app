@@ -54,7 +54,7 @@ class PlacementChatPage extends StatelessWidget {
           ? null
           : FloatingActionButton.extended(
               onPressed: () => Get.to(() => AddPlacementMessage()),
-              label: const Text('new'),
+              label: const Text('Add New'),
             ),
     );
   }

@@ -47,23 +47,23 @@ class PlacementChatTile extends StatelessWidget {
           ),
           const Padding(
             padding: EdgeInsets.only(right: 15),
-            child: Divider(),
+            child: Divider(indent: 0, endIndent: 0),
           ),
           // ---------------------- description
           Text(msgModel.description, style: AppTStyles.body),
           const Padding(
             padding: EdgeInsets.only(right: 15),
-            child: Divider(),
+            child: Divider(indent: 0, endIndent: 0),
           ),
           // ---------------------- images & files row
-          if (msgModel.fileUrls.isNotEmpty || msgModel.imageUrls.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: AttachmentsRow(msgModel, year),
-              ),
+          // if (msgModel.fileUrls.isNotEmpty || msgModel.imageUrls.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: AttachmentsRow(msgModel, year),
             ),
+          ),
           // ---------------------- date and time
           Align(
             alignment: Alignment.centerRight,

@@ -122,7 +122,7 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
         actions: [
           IconButton(
             onPressed: fetchSemesters,
-            icon: const Icon(Icons.circle),
+            icon: const Icon(Icons.refresh),
           ),
         ],
       ),
@@ -205,6 +205,7 @@ class ResultAnalysisGraph extends StatelessWidget {
         header: examType,
       ),
       legend: Legend(
+        toggleSeriesVisibility: false,
         isVisible: true,
         textStyle: AppTStyles.subHeading,
         position: LegendPosition.bottom,
@@ -231,7 +232,7 @@ class ResultAnalysisGraph extends StatelessWidget {
         majorGridLines: const MajorGridLines(color: Colors.transparent),
         majorTickLines: const MajorTickLines(color: Colors.transparent),
       ),
-      primaryYAxis: NumericAxis(maximum: maxYValue),
+      primaryYAxis: NumericAxis(maximum: maxYValue, minimum: 0),
     );
   }
 }
