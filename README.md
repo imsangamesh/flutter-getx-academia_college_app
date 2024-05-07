@@ -1,16 +1,11 @@
 # newbie
 
-A new Flutter project.
+## An app for our college, where basically there are 4 roles: Student, Faculty, Admin & Parent. The motto of our app is to digitally connect all these 4 roles through an app to ease different activities of the college. Here, admins can assign roles to different emails, some of the features of the app are:
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Google Authentication with bound role only
+- Firebase In-app notifications to parents & students
+- Attendance updation by faculty & review by students & parents
+- Placement messages by admin & review by students
+- Activity uploading & analysis by student & approve or disapprove by faculty
+- Marks & result updation by faculty & analysis by students
+- Attractive UI with theming, and more!

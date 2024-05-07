@@ -12,6 +12,7 @@ class AppTheme {
 
   static final lightTheme = ThemeData(
     /// ----------------------------------------------------- `CORE`
+    useMaterial3: false,
     splashColor: AppColors.prim.withAlpha(150),
     colorScheme: const ColorScheme.light(primary: AppColors.prim),
     scaffoldBackgroundColor: AppColors.lScaffoldBG,
@@ -104,6 +105,7 @@ class AppTheme {
 
   static final darkTheme = ThemeData(
     /// ----------------------------------------------------- `CORE`
+    useMaterial3: false,
     splashColor: AppColors.mid.withAlpha(100),
     colorScheme: const ColorScheme.dark(primary: AppColors.prim),
     scaffoldBackgroundColor: AppColors.dScaffoldBG,
