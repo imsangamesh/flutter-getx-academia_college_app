@@ -33,14 +33,6 @@ class UpdateCoreData extends StatelessWidget {
     try {
       Popup.loading(label: 'loading');
 
-      // final inputJSONData = selectedOption.value == 'Students'
-      //     ? MyData.studentsJSON
-      //     : selectedOption.value == 'Faculties'
-      //         ? MyData.facultyJSON
-      //         : selectedOption.value == 'Admins'
-      //             ? MyData.adminJSON
-      //             : MyData.subjectsJSON;
-
       final inputJSONData = json.decode(textController.text);
       WriteBatch studentsBatch = fire.batch(); // create BATCH
 
@@ -100,15 +92,7 @@ class UpdateCoreData extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Update JSON Data'),
-        actions: [
-          IconButton(
-            onPressed: uploadResultData,
-            icon: const Icon(Icons.circle),
-          )
-        ],
-      ),
+      appBar: AppBar(title: const Text('Update JSON Data')),
       body: Obx(
         () => GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

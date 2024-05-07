@@ -43,6 +43,7 @@ class VerifiedActivityTile extends StatelessWidget {
 
                 /// ---------------- `details ROW`
                 SizedBox(
+                  width: context.width,
                   height: 40,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
