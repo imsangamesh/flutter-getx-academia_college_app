@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newbie/api/fcm_api.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/helpers/my_helper.dart';
@@ -90,11 +89,6 @@ class ParentDashboard extends StatelessWidget {
             'Result Analysis',
             () => Get.to(() => const ResultAnalytics()),
           ),
-          //
-          const SizedBox(height: 15),
-          MyOutlinedBtn('Notify', () {
-            FCMApi.sendPlacemntUpdates('Final Year', 'This is the dummy body!');
-          }),
         ],
       ),
     );
