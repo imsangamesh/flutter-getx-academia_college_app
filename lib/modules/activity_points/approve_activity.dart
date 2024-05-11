@@ -34,7 +34,7 @@ class _ApproveActivityState extends State<ApproveActivity> {
       final stdUSNList = stdSnaps.docs
           .map((each) => each.data())
           .where((eachMap) =>
-              eachMap['pendingActivities'] > 0 &&
+              (eachMap['pendingActivities'] ?? 0) > 0 &&
               eachMap['facultyEmail'] == 'snbenkikeri@gmail.com')
           .map((each) => each['usn'].toString())
           .toSet()
