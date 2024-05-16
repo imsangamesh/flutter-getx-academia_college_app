@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
 import 'package:newbie/core/constants/pref_keys.dart';
+import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
@@ -34,13 +33,21 @@ class _ApproveActivityState extends State<ApproveActivity> {
       final stdUSNList = stdSnaps.docs
           .map((each) => each.data())
           .where((eachMap) =>
-              eachMap['pendingActivities'] > 0 &&
-              eachMap['facultyEmail'] == 'snbenkikeri@gmail.com')
+              (eachMap['pendingActivities'] ?? 0) > 0 &&
+              eachMap['facultyEmail'] == AppData.fetchData()['email'])
           .map((each) => each['usn'].toString())
           .toSet()
           .toList();
 
-      log(stdUSNList.toString());
+      if (stdUSNList.isEmpty) {
+        Get.back();
+        Popup.alert(
+          'Oops!',
+          'There are no students registered under you right now! Kindly contact the administration dept.',
+        );
+        return;
+      }
+
       studentUSNList(stdUSNList);
       selectedUsn(stdUSNList.first);
 

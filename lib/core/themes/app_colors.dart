@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class AppColors {
   const AppColors._();
 
-  static const success = Color(0xFF08DF75);
+  static const success = Color(0xFF008F47);
   static const danger = Color(0xFFFF473A);
   static const neutral = Color(0xFFFFC107);
   static const transparent = Colors.transparent;

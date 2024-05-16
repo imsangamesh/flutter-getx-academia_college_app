@@ -54,7 +54,7 @@ class AdminDashboard extends StatelessWidget {
 
             /// --------------------------------- `BUTTONS`
             MyElevatedBtn(
-              'Update JSON Data',
+              'College Data Management',
               () => Get.to(() => UpdateCoreData()),
             ),
             const SizedBox(height: 10),

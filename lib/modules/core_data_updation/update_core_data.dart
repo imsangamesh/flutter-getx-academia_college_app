@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class UpdateCoreData extends StatelessWidget {
   UpdateCoreData({super.key});
 
   final textController = TextEditingController();
-  final options = ['Students', 'Faculties', 'Admins', 'Dept Sem Subjects'];
+  final options = ['Students', 'Faculty', 'Admins', 'Dept Sem Subjects'];
   final selectedOption = 'Students'.obs;
 
   /// -------------------------------------- `SUBMIT & UPDATE DATA`
@@ -39,7 +40,7 @@ class UpdateCoreData extends StatelessWidget {
       for (var each in inputJSONData.entries) {
         final clxn = selectedOption.value == 'Students'
             ? FireKeys.students
-            : selectedOption.value == 'Faculties'
+            : selectedOption.value == 'Faculty'
                 ? FireKeys.faculties
                 : selectedOption.value == 'Admins'
                     ? FireKeys.admins
@@ -57,9 +58,16 @@ class UpdateCoreData extends StatelessWidget {
     } on FirebaseException catch (error) {
       Popup.terminateLoading();
       Popup.alert(error.code, error.message.toString());
+    } on FormatException catch (e) {
+      Popup.terminateLoading();
+      Popup.alert(
+        'Oops!',
+        'Please make sure that your JSON data is formatted properly! Error: \n$e',
+      );
     } catch (e) {
       Popup.terminateLoading();
       Popup.general();
+      log(e.toString());
     }
   }
 
@@ -92,7 +100,7 @@ class UpdateCoreData extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Update JSON Data')),
+      appBar: AppBar(title: const Text('Manage College Data')),
       body: Obx(
         () => GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),

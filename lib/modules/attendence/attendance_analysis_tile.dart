@@ -19,61 +19,57 @@ class AttendanceAnalysisTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          dividerColor: Colors.transparent,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ExpansionTile(
+            title: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 10, 0, 30),
+              child: Column(
+                children: [
+                  Text(subMap['subject'], style: AppTStyles.subHeading),
+                  const SizedBox(height: 20),
 
-        /// ---------------------------------------- `EXPANSION TILE`
-        child: ExpansionTile(
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(30, 10, 0, 30),
-            child: Column(
-              children: [
-                Text(subMap['subject'], style: AppTStyles.subHeading),
-                const SizedBox(height: 20),
-
-                /// ---------------------------------------- `PERCENTAGE GRAPH`
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: CircularProgressIndicator(
-                            value: perc(),
-                            strokeWidth: 15,
-                            color: AppColors.success,
-                            backgroundColor: AppColors.danger,
+                  /// ---------------------------------------- `PERCENTAGE GRAPH`
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: CircularProgressIndicator(
+                              value: perc(),
+                              strokeWidth: 15,
+                              color: AppColors.success,
+                              backgroundColor: AppColors.danger,
+                            ),
                           ),
-                        ),
-                        Text('${(perc() * 100).toInt()}%',
-                            style: AppTStyles.heading),
-                      ],
-                    ),
-                    const SizedBox(width: 50),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        graphLegend('Present'),
-                        graphLegend('Absent'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                          Text('${(perc() * 100).toInt()}%',
+                              style: AppTStyles.heading),
+                        ],
+                      ),
+                      const SizedBox(width: 50),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          graphLegend('Present'),
+                          graphLegend('Absent'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          /// ---------------------------------------- `EACH DAY CHIP`
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 10),
-              constraints: const BoxConstraints(maxHeight: 300),
-              child: SingleChildScrollView(
+            /// ---------------------------------------- `EACH DAY CHIP`
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 10),
+                constraints: const BoxConstraints(maxHeight: 300),
                 child: Wrap(
                   spacing: 5,
                   runSpacing: 7,
@@ -95,10 +91,34 @@ class AttendanceAnalysisTile extends StatelessWidget {
                       .toList(),
                 ),
               ),
+              const Divider(),
+            ],
+          ),
+          if ((perc() * 100) < 85)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                'Your attendance for subject code: "${subMap['subject']}" is less than 85%\nPlease be responsible about it.',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.danger,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            )
+          else
+            const Padding(
+              padding: EdgeInsets.fromLTRB(8, 8, 8, 0),
+              child: Text(
+                'You are doing great, keep it up!',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.success,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
-            const Divider(),
-          ],
-        ),
+        ],
       ),
     );
   }

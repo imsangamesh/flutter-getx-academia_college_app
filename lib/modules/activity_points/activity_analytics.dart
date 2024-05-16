@@ -63,7 +63,15 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Activity Analytics')),
+      appBar: AppBar(
+        title: const Text('Activity Analysis'),
+        actions: [
+          IconButton(
+            onPressed: calculateTotalPoints,
+            icon: const Icon(Icons.refresh),
+          )
+        ],
+      ),
       body: Obx(
         () => Padding(
           padding: const EdgeInsets.all(20),

@@ -6,6 +6,7 @@ import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/widgets/my_buttons.dart';
 
 class Popup {
+  const Popup._();
   //
   /// ---------------------------------------------------------- `general`
   static void general() {

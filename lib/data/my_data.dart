@@ -81,6 +81,14 @@ class MyData {
     },
   };
 
+  static const sdfs = {
+    "pandeysarthak18@gmail.com": {
+      "email": "pandeysarthak18@gmail.com",
+      "name": "Sarthak Pandey",
+      "branch": "CSE"
+    },
+  };
+
   static const facultyJSON = {
     'san.sangamesh96@gmail.com': {
       'email': 'san.sangamesh96@gmail.com',
