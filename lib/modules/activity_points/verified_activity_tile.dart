@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/widgets/app_file_viewers.dart';
@@ -10,9 +9,9 @@ import 'package:newbie/models/activity_model.dart';
 import '../../core/widgets/my_buttons.dart';
 
 class VerifiedActivityTile extends StatelessWidget {
-  VerifiedActivityTile(this.activity, {super.key});
+  const VerifiedActivityTile(this.activity, this.usn, {super.key});
 
-  final String usn = AppData.fetchData()['usn'];
+  final String usn;
   final Activity activity;
 
   get bottomStripColor => activity.status == ActivityStatus.approved.str
@@ -31,11 +30,11 @@ class VerifiedActivityTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// ---------------- `Description`
                 Text(activity.description, style: AppTStyles.body),

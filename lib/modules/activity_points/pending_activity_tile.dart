@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
@@ -19,6 +20,10 @@ class PendingActivityTile extends StatelessWidget {
 
   approveOrReject(ActivityStatus status) async {
     try {
+      await fire.collection(FireKeys.students).doc(usn).update(
+        {'pendingActivities': FieldValue.increment(-1)},
+      );
+
       await fire
           .collection(FireKeys.students)
           .doc(usn)
@@ -58,7 +63,7 @@ class PendingActivityTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(activity.description, style: AppTStyles.body),
-          const NoIndentDivider(),
+          const SizedBox(height: 15),
           SizedBox(
             width: size.width,
             height: 40,

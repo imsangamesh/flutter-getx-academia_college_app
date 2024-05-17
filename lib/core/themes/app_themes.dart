@@ -36,15 +36,28 @@ class AppTheme {
       titleTextStyle: AppTStyles.appbar,
       centerTitle: true,
       iconTheme: const IconThemeData(color: AppColors.prim, size: 24),
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.lScaffoldBG,
       elevation: 0,
       titleSpacing: 0,
     ),
 
+    /// ----------------------------------------------------- `TABBAR`
+    tabBarTheme: TabBarTheme(
+      indicatorSize: TabBarIndicatorSize.label,
+      labelColor: AppColors.prim,
+      unselectedLabelColor: AppColors.themeGrey,
+      indicatorColor: AppColors.prim,
+      labelPadding: const EdgeInsets.all(12),
+      labelStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+
     /// ----------------------------------------------------- `LIST TILE`
     listTileTheme: ListTileThemeData(
-      textColor: AppColors.mid,
-      iconColor: AppColors.mid,
+      iconColor: AppColors.prim,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       tileColor: AppColors.lListTile,
     ),
@@ -129,15 +142,28 @@ class AppTheme {
       titleTextStyle: AppTStyles.appbar,
       centerTitle: true,
       iconTheme: const IconThemeData(color: AppColors.prim, size: 24),
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.dScaffoldBG,
       elevation: 0,
       titleSpacing: 0,
     ),
 
+    /// ----------------------------------------------------- `TABBAR`
+    tabBarTheme: TabBarTheme(
+      indicatorSize: TabBarIndicatorSize.label,
+      labelColor: AppColors.prim,
+      unselectedLabelColor: AppColors.themeGrey,
+      indicatorColor: AppColors.prim,
+      labelPadding: const EdgeInsets.all(12),
+      labelStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+      unselectedLabelStyle: const TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+
     /// ----------------------------------------------------- `LIST TILE`
     listTileTheme: ListTileThemeData(
-      textColor: AppColors.mid,
-      iconColor: AppColors.mid,
+      iconColor: AppColors.prim,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       tileColor: AppColors.dListTile,
     ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
@@ -27,6 +25,8 @@ class _StudentAttendanceAnalyticsState
 
   Future<void> fetchAttendanceData() async {
     try {
+      subjects.clear();
+      areSubjectsSet(false);
       final dept = AppData.fetchData()['dept'];
       final sem = AppData.fetchData()['sem'];
 
@@ -46,6 +46,7 @@ class _StudentAttendanceAnalyticsState
             .collection(FireKeys.students)
             .doc(usn)
             .collection(eachSub)
+            .orderBy('date')
             .get();
 
         if (docSnap.docs.isNotEmpty) {
@@ -54,8 +55,6 @@ class _StudentAttendanceAnalyticsState
           subMap['attendance'] = docSnap.docs.map((e) => e.data()).toList();
 
           subjects.add(subMap);
-          log(subMap.toString());
-          log('-----------------------------------');
         }
       }
 
@@ -77,21 +76,31 @@ class _StudentAttendanceAnalyticsState
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-            title: widget.isParent
-                ? const Text('Student\'s Attendance')
-                : const Text('My Attendance')),
-        body: areSubjectsSet()
-            ? SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: subjects
-                        .map((subMap) => AttendanceAnalysisTile(usn, subMap))
-                        .toList(),
-                  ),
-                ),
-              )
-            : const Center(child: CircularProgressIndicator()),
+          title: widget.isParent
+              ? const Text('Student\'s Attendance')
+              : const Text('My Attendance'),
+          actions: [
+            IconButton(
+              onPressed: areSubjectsSet() ? fetchAttendanceData : null,
+              icon: const Icon(Icons.refresh),
+            ),
+          ],
+        ),
+        body: areSubjectsSet() && subjects.isEmpty
+            ? Popup.nill('Your attendance is not updated yet!')
+            : areSubjectsSet()
+                ? SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: subjects
+                            .map(
+                                (subMap) => AttendanceAnalysisTile(usn, subMap))
+                            .toList(),
+                      ),
+                    ),
+                  )
+                : Popup.circleLoader(),
       ),
     );
   }

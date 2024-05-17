@@ -6,9 +6,9 @@ import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
-import 'package:newbie/core/widgets/my_buttons.dart';
 import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/activity_model.dart';
+import 'package:newbie/modules/activity_points/faculty_activity_view.dart';
 import 'package:newbie/modules/activity_points/pending_activity_tile.dart';
 
 import '../../core/widgets/my_dropdown_wrapper.dart';
@@ -43,14 +43,13 @@ class _ApproveActivityState extends State<ApproveActivity> {
         Get.back();
         Popup.alert(
           'Oops!',
-          'There are no students registered under you right now! Kindly contact the administration dept.',
+          'There are no students registered under you right now, or there are no new activities to be approved!',
         );
         return;
       }
 
       studentUSNList(stdUSNList);
       selectedUsn(stdUSNList.first);
-
       areStudentsFetched(true);
     } catch (e) {
       Popup.general();
@@ -59,26 +58,37 @@ class _ApproveActivityState extends State<ApproveActivity> {
 
   @override
   void initState() {
-    fetchStudentData();
     super.initState();
+    fetchStudentData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: AppBar(title: const Text('Approve Activity')),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              /// ----------------------------- `USN Selector`
-              if (areStudentsFetched())
-                Row(
+        appBar: AppBar(
+          title: const Text('Approve Activity'),
+          actions: [
+            IconButton(
+              onPressed: () => Get.to(() => const FacultyActivityView()),
+              icon: const Icon(Icons.format_list_bulleted_rounded),
+            ),
+            IconButton(
+              onPressed: fetchStudentData,
+              icon: const Icon(Icons.refresh),
+            )
+          ],
+        ),
+        body: !areStudentsFetched()
+            ? Popup.circleLoader()
+            : Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      child: MyDropDownWrapper(
+                    /// ----------------------------- `USN Selector`
+                    if (areStudentsFetched())
+                      MyDropDownWrapper(
                         DropdownButton(
                           dropdownColor: AppColors.listTile,
                           underline: MyDropDownWrapper.transparentDivider,
@@ -101,71 +111,64 @@ class _ApproveActivityState extends State<ApproveActivity> {
                               selectedUsn(newValue!),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15, left: 10),
-                      child: MyIconBtn(
-                        Icons.refresh,
-                        fetchStudentData,
-                        size: 50,
+
+                    /// ----------------------------- `PENDING ACTIVITIES`
+                    if (selectedUsn() != '')
+                      Expanded(
+                        child: StreamBuilder(
+                          stream: fire
+                              .collection(FireKeys.students)
+                              .doc(selectedUsn.value)
+                              .collection(FireKeys.activities)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else if (snapshot.hasData) {
+                              final activitySnap = snapshot.data;
+
+                              if (activitySnap == null ||
+                                  activitySnap.docs.isEmpty) {
+                                return Popup.nill(
+                                  'Oops! No pending activities found!',
+                                );
+                              }
+
+                              final pendingActivityMaps = activitySnap.docs
+                                  .map((e) => e.data())
+                                  .where((each) =>
+                                      each['status'] ==
+                                      ActivityStatus.pending.str)
+                                  .toList();
+
+                              if (pendingActivityMaps.isEmpty) {
+                                return Popup.nill(
+                                  'Oops! No pending activities found!',
+                                );
+                              }
+
+                              return ListView.builder(
+                                itemCount: pendingActivityMaps.length,
+                                itemBuilder: (context, index) {
+                                  final activity = Activity.fromMap(
+                                    pendingActivityMaps[index],
+                                  );
+
+                                  return PendingActivityTile(
+                                      selectedUsn.value, activity);
+                                },
+                              );
+                            } else {
+                              return const Center(child: Text('...'));
+                            }
+                          },
+                        ),
                       ),
-                    ),
                   ],
                 ),
-
-              /// ----------------------------- `PENDING ACTIVITIES`
-              if (selectedUsn() != '')
-                Expanded(
-                  child: StreamBuilder(
-                    stream: fire
-                        .collection(FireKeys.students)
-                        .doc(selectedUsn.value)
-                        .collection(FireKeys.activities)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasData) {
-                        final activitySnap = snapshot.data;
-
-                        if (activitySnap == null || activitySnap.docs.isEmpty) {
-                          return Popup.nill(
-                            'Oops! No pending activities found!',
-                          );
-                        }
-
-                        final pendingActivityMaps = activitySnap.docs
-                            .map((e) => e.data())
-                            .where((each) =>
-                                each['status'] == ActivityStatus.pending.str)
-                            .toList();
-
-                        if (pendingActivityMaps.isEmpty) {
-                          return Popup.nill(
-                            'Oops! No pending activities found!',
-                          );
-                        }
-
-                        return ListView.builder(
-                          itemCount: pendingActivityMaps.length,
-                          itemBuilder: (context, index) {
-                            final activity = Activity.fromMap(
-                              pendingActivityMaps[index],
-                            );
-
-                            return PendingActivityTile(
-                                selectedUsn.value, activity);
-                          },
-                        );
-                      } else {
-                        return const Center(child: Text('...'));
-                      }
-                    },
-                  ),
-                ),
-            ],
-          ),
-        ),
+              ),
       ),
     );
   }

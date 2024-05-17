@@ -28,6 +28,7 @@ class Popup {
             const SizedBox(height: 5),
             Text(
               text,
+              style: const TextStyle(fontSize: 15),
               textAlign: TextAlign.center,
             ),
           ],
@@ -221,42 +222,38 @@ class Popup {
   /// ---------------------------------------------------------- `loading`
   static void loading({String? label}) {
     Get.dialog(
-      WillPopScope(
-        onWillPop: () async => true,
-        child: Scaffold(
+      Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          elevation: 0,
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.transparent,
-            bottom: label == null
-                ? null
-                : PreferredSize(
-                    preferredSize: const Size(double.infinity, 30),
-                    child: Container(
-                      height: 30,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        color: AppColors.prim,
-                        border: Border(
-                          top: BorderSide(
-                              color: AppColors.dScaffoldBG, width: 2),
-                          bottom: BorderSide(
-                              color: AppColors.dScaffoldBG, width: 2.5),
-                        ),
+          bottom: label == null
+              ? null
+              : PreferredSize(
+                  preferredSize: const Size(double.infinity, 30),
+                  child: Container(
+                    height: 30,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: AppColors.prim,
+                      border: Border(
+                        top: BorderSide(color: AppColors.dScaffoldBG, width: 2),
+                        bottom: BorderSide(
+                            color: AppColors.dScaffoldBG, width: 2.5),
                       ),
-                      child: Center(
-                        child: Text(
-                          label,
-                          style: const TextStyle(color: AppColors.dScaffoldBG),
-                        ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        label,
+                        style: const TextStyle(color: AppColors.dScaffoldBG),
                       ),
                     ),
                   ),
-          ),
-          body: LinearProgressIndicator(
-            backgroundColor: AppColors.prim.withAlpha(50),
-          ),
+                ),
+        ),
+        body: LinearProgressIndicator(
+          backgroundColor: AppColors.prim.withAlpha(50),
         ),
       ),
       barrierColor: AppColors.prim.withAlpha(10),
@@ -265,6 +262,37 @@ class Popup {
 
   /// ---------------------------------------------------------- `circle loader`
   static circleLoader({String? label}) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            radius: 22,
+            backgroundColor: AppColors.listTile,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: CircularProgressIndicator(
+                strokeWidth: 5,
+                backgroundColor: AppColors.scaffold,
+                color: AppColors.prim,
+                strokeCap: StrokeCap.round,
+              ),
+            ),
+          ),
+          const SizedBox(height: 5),
+          if (label != null)
+            Text(
+              label,
+              style: AppTStyles.subHeading,
+              textAlign: TextAlign.center,
+            )
+        ],
+      ),
+    );
+  }
+
+  /// ---------------------------------------------------------- `scaffold loader`
+  static scaffoldLoader({String? label}) {
     Get.dialog(
       Scaffold(
         backgroundColor: Colors.transparent,
@@ -281,6 +309,7 @@ class Popup {
                     strokeWidth: 5,
                     backgroundColor: AppColors.scaffold,
                     color: AppColors.prim,
+                    strokeCap: StrokeCap.round,
                   ),
                 ),
               ),
@@ -314,6 +343,7 @@ class Popup {
               width: 40,
               height: 40,
               child: CircularProgressIndicator(
+                strokeCap: StrokeCap.round,
                 strokeWidth: 1.5,
                 value: loadingProgress.cumulativeBytesLoaded /
                     loadingProgress.expectedTotalBytes!,

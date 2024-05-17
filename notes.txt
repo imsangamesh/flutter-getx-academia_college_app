@@ -50,3 +50,8 @@
 * Advantages
 - all in one application
 - active notifications every day
+
+
+* New Changes:
+- Attendance viewing & editing by Faculty
+- Students' Activity tracking by Faculty.

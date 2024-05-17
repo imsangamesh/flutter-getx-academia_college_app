@@ -39,7 +39,7 @@ class AuthController extends GetxController {
         idToken: googleAuth.idToken,
       );
 
-      Popup.circleLoader(label: 'loading...');
+      Popup.scaffoldLoader(label: 'loading...');
 
       /// once signed-in extract `UserCredentials`
       final userCredential = await auth.signInWithCredential(credential);

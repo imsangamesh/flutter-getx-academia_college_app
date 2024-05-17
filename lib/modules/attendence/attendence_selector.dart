@@ -7,6 +7,7 @@ import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/data/college_data.dart';
+import 'package:newbie/modules/attendence/edit_attendance.dart';
 import 'package:newbie/modules/attendence/take_student_attendence.dart';
 
 import '../../core/widgets/my_buttons.dart';
@@ -66,7 +67,7 @@ class AttendanceSelector extends StatelessWidget {
   }
 
   /// - - - - - - - - - - - - - - - - - - - - `fetch STUDENTS for selected_SUB`
-  fetchStudentsAndProceed() async {
+  fetchStudentsAndProceed(String mode) async {
     final dept = MyHelper.l2sDept(selectedDept());
 
     try {
@@ -102,7 +103,11 @@ class AttendanceSelector extends StatelessWidget {
       }
 
       Popup.terminateLoading();
-      await Get.to(() => TakeStudentAttendance(students, selectedSubCode()));
+      if (mode == 'new') {
+        await Get.to(() => TakeStudentAttendance(students, selectedSubCode()));
+      } else {
+        await Get.to(() => EditAttendance(students, selectedSubCode()));
+      }
     } catch (e) {
       Popup.terminateLoading();
       Popup.general();
@@ -171,30 +176,6 @@ class AttendanceSelector extends StatelessWidget {
                     ),
                   ),
 
-                  /// -------------------------------------- `division`
-                  MyDropDownWrapper(
-                    DropdownButton(
-                      dropdownColor: AppColors.listTile,
-                      underline: MyDropDownWrapper.transparentDivider,
-                      isExpanded: true,
-                      iconSize: 30,
-                      icon: const Icon(Icons.arrow_drop_down),
-                      value: selectedDiv(),
-                      items: CollegeData.divisions
-                          .map((String each) => DropdownMenuItem(
-                                value: each,
-                                child: Text(
-                                  '  $each division',
-                                  style: selectedDiv() == each
-                                      ? AppTStyles.subHeading
-                                      : null,
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (String? newValue) => selectedDiv(newValue!),
-                    ),
-                  ),
-
                   Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: MyOutlinedBtn(
@@ -231,12 +212,51 @@ class AttendanceSelector extends StatelessWidget {
                       ),
                     ),
 
-                  // --------------------------------- submit ---------------
+                  /// -------------------------------------- `division`
                   if (areSubjectsFetched())
-                    MyElevatedBtn(
-                      'Take Attendance',
-                      () => fetchStudentsAndProceed(),
-                      radius: 10,
+                    MyDropDownWrapper(
+                      DropdownButton(
+                        dropdownColor: AppColors.listTile,
+                        underline: MyDropDownWrapper.transparentDivider,
+                        isExpanded: true,
+                        iconSize: 30,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        value: selectedDiv(),
+                        items: CollegeData.divisions
+                            .map((String each) => DropdownMenuItem(
+                                  value: each,
+                                  child: Text(
+                                    '  $each division',
+                                    style: selectedDiv() == each
+                                        ? AppTStyles.subHeading
+                                        : null,
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (String? newValue) => selectedDiv(newValue!),
+                      ),
+                    ),
+
+                  // --------------------------------- TAKE or EDIT ATTENDANCE
+                  if (areSubjectsFetched())
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyOutlinedBtn(
+                            'View & Edit',
+                            () => fetchStudentsAndProceed('edit'),
+                            radius: 10,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: MyElevatedBtn(
+                            'New',
+                            () => fetchStudentsAndProceed('new'),
+                            radius: 10,
+                          ),
+                        )
+                      ],
                     )
                 ],
               ),

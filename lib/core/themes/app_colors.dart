@@ -27,6 +27,9 @@ class AppColors {
       Get.isDarkMode ? const Color(0xFF03071B) : const Color(0xfffbedff);
   static Color get listTile =>
       Get.isDarkMode ? const Color(0xFF16002B) : const Color(0xFFF7DBFF);
+  static Color get normal => Get.isDarkMode ? white : black;
+  static Color get themeGrey =>
+      Get.isDarkMode ? Colors.grey : Colors.grey.shade600;
 
   static Color get oppScaffold =>
       Get.isDarkMode ? const Color(0xfffbedff) : const Color(0xFF03071B);

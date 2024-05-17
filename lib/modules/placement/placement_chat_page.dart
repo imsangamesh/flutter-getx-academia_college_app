@@ -27,7 +27,7 @@ class PlacementChatPage extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Popup.circleLoader();
           } else if (snapshot.hasData) {
             final msgSnap = snapshot.data;
 

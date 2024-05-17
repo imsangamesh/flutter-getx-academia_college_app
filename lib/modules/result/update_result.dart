@@ -111,21 +111,21 @@ class UpdateResultScreen extends StatelessWidget {
     if ((examType == CollegeData.exams[0] ||
             examType == CollegeData.exams[1]) &&
         validMarks > 20) {
-      // CIE MARKS
+      // ------------------ CIE MARKS
       Popup.alert(
         'Oops!',
         'CIE marks should be no greater than 20.',
       );
       return;
     } else if (examType == CollegeData.exams[2] && validMarks > 10) {
-      // ASSIGNMENT MARKS
+      // ------------------ ASSIGNMENT MARKS
       Popup.alert(
         'Oops!',
         'Assignment marks should be no greater than 10.',
       );
       return;
     } else if (examType == CollegeData.exams[3] && validMarks > 100) {
-      // SEE MARKS
+      // ------------------ SEE MARKS
       Popup.alert(
         'Oops!',
         'SEE marks should be no greater than 100.',
@@ -140,10 +140,9 @@ class UpdateResultScreen extends StatelessWidget {
       final allSubsSnap =
           await fire.collection(FireKeys.result).doc('$usn-$sem').get();
 
-      Map<String, dynamic> allSubData = allSubsSnap.data() ?? {subject: {}};
-
       // - - - - - - - - - - - - updating latest marks
-      allSubData[subject] = {};
+      Map<String, dynamic> allSubData = allSubsSnap.data() ?? {subject: {}};
+      allSubData[subject] = allSubData[subject] ?? {};
       allSubData[subject][examType] = (double.tryParse(marks) ?? 0);
 
       await fire.collection(FireKeys.result).doc('$usn-$sem').set(allSubData);

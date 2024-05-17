@@ -7,7 +7,6 @@ import 'package:newbie/core/helpers/my_helper.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
-import 'package:newbie/core/widgets/my_buttons.dart';
 import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/activity_model.dart';
 import 'package:newbie/modules/activity_points/verified_activity_tile.dart';
@@ -23,7 +22,7 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
   //
   final String usn = AppData.fetchData()['usn'];
   final statuses = ['Approved', 'Pending', 'Rejected'];
-  final selected = 'Approved'.obs;
+  final selected = 0.obs;
 
   final totalPoints = 0.0.obs;
   final areTotalPoints = false.obs;
@@ -62,23 +61,32 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Activity Analysis'),
-        actions: [
-          IconButton(
-            onPressed: calculateTotalPoints,
-            icon: const Icon(Icons.refresh),
-          )
-        ],
-      ),
-      body: Obx(
-        () => Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              /// ------------------------------- `ACTIVITY Tracker`
-              if (areTotalPoints())
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Activity Analysis'),
+          bottom: TabBar(
+            onTap: (value) => selected(value),
+            tabs: const [
+              Text('Approved'),
+              Text('Pending'),
+              Text('Rejected'),
+            ],
+          ),
+          actions: [
+            IconButton(
+              onPressed: calculateTotalPoints,
+              icon: const Icon(Icons.refresh),
+            )
+          ],
+        ),
+        body: Obx(
+          () => Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                /// ------------------------------- `ACTIVITY Tracker`
                 Container(
                   padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                   decoration: BoxDecoration(
@@ -99,69 +107,56 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
                           value: totalPoints / 100,
                           minHeight: 15,
                           borderRadius: BorderRadius.circular(10),
+                          backgroundColor: AppColors.prim.withAlpha(50),
                         ),
                       )
                     ],
                   ),
                 ),
-              const SizedBox(height: 15),
+                const SizedBox(height: 15),
 
-              /// ------------------------------- `ACTIVITY STATUS Selector`
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.prim.withOpacity(0.4)),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: statuses
-                      .map((e) => e == selected()
-                          ? MyElevatedBtn(e, () {})
-                          : MyOutlinedBtn(e, () => selected(e)))
-                      .toList(),
-                ),
-              ),
-              const SizedBox(height: 15),
+                /// ------------------------------- `ACTIVITIES`
+                StreamBuilder(
+                  stream: fire
+                      .collection(FireKeys.students)
+                      .doc(usn)
+                      .collection(FireKeys.activities)
+                      .where('status', isEqualTo: statuses[selected()])
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Popup.circleLoader();
+                    } else if (snapshot.hasData) {
+                      final activitySnap = snapshot.data;
 
-              /// ------------------------------- `ACTIVITIES`
-              StreamBuilder(
-                stream: fire
-                    .collection(FireKeys.students)
-                    .doc(usn)
-                    .collection(FireKeys.activities)
-                    .where('status', isEqualTo: selected())
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasData) {
-                    final activitySnap = snapshot.data;
+                      if (activitySnap == null || activitySnap.docs.isEmpty) {
+                        return Popup.nill(
+                          'Oops! No activities found!',
+                        );
+                      }
 
-                    if (activitySnap == null || activitySnap.docs.isEmpty) {
-                      return Popup.nill(
-                        'Oops! No activities found!',
+                      return Expanded(
+                        child: ListView.builder(
+                          itemCount: activitySnap.docs.length,
+                          itemBuilder: (context, index) {
+                            final activity = Activity.fromMap(
+                              activitySnap.docs[index].data(),
+                            );
+
+                            return VerifiedActivityTile(
+                              activity,
+                              AppData.fetchData()['usn'],
+                            );
+                          },
+                        ),
                       );
+                    } else {
+                      return const Center(child: Text('...'));
                     }
-
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: activitySnap.docs.length,
-                        itemBuilder: (context, index) {
-                          final activity = Activity.fromMap(
-                            activitySnap.docs[index].data(),
-                          );
-
-                          return VerifiedActivityTile(activity);
-                        },
-                      ),
-                    );
-                  } else {
-                    return const Center(child: Text('...'));
-                  }
-                },
-              )
-            ],
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

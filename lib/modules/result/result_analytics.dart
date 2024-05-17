@@ -45,6 +45,15 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
           .map((each) => each.id.split('-').last)
           .toList();
 
+      if (sems.isEmpty) {
+        Get.back();
+        Popup.alert(
+          'No Result!',
+          'You don\'t have any result to be shown, please make some progress and come again!',
+        );
+        return;
+      }
+
       semesters(sems);
       selectedSem(sems.first);
       areSemsFetched(true);
@@ -53,6 +62,7 @@ class _ResultAnalyticsState extends State<ResultAnalytics> {
     } on FirebaseException catch (e) {
       Popup.alert(e.code, e.message.toString());
     } catch (e) {
+      log(e.toString());
       Popup.general();
     }
   }

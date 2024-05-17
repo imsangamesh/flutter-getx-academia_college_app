@@ -101,8 +101,14 @@ class TakeStudentAttendance extends StatelessWidget {
                       child: CheckboxListTile(
                         checkboxShape: const CircleBorder(),
                         activeColor: AppColors.success,
-                        subtitle: Text(each['name']),
-                        title: Text(each['usn']),
+                        title: Text(
+                          each['usn'],
+                          style: TextStyle(color: AppColors.normal),
+                        ),
+                        subtitle: Text(
+                          each['name'],
+                          style: TextStyle(color: AppColors.themeGrey),
+                        ),
                         tileColor: AppColors.listTile,
                         value: each['isPresent'],
                         onChanged: (val) => each['isPresent'] = val ?? false,

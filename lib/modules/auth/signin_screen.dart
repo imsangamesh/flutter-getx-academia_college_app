@@ -100,3 +100,18 @@ class SigninScreen extends StatelessWidget {
     );
   }
 }
+
+/*
+Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        border: isBorder == true
+            ? Border.all(color: AppColors.prim.withAlpha(200), width: 0.5)
+            : null,
+        color: AppColors.listTile,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: child,
+    );
+*/
