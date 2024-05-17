@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newbie/core/constants/constants.dart';
+import 'package:newbie/core/constants/images.dart';
 import 'package:newbie/core/helpers/app_data.dart';
 import 'package:newbie/core/helpers/my_helper.dart';
 import 'package:newbie/core/themes/app_colors.dart';
 import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/themes/theme_controller.dart';
 import 'package:newbie/modules/activity_points/activity_analytics.dart';
-import 'package:newbie/modules/activity_points/upload_new_activity.dart';
 import 'package:newbie/modules/attendence/student_attendence_analytics.dart';
 import 'package:newbie/modules/auth/auth_controller.dart';
 import 'package:newbie/modules/dashboard/widgets/home_helpers.dart';
 import 'package:newbie/modules/placement/placement_chat_page.dart';
 import 'package:newbie/modules/result/result_analytics.dart';
-
-import '../../core/widgets/my_buttons.dart';
 
 class StudentDashboard extends StatelessWidget {
   StudentDashboard({super.key});
@@ -72,36 +70,63 @@ class StudentDashboard extends StatelessWidget {
             ],
           ),
           const Divider(),
+          const SizedBox(height: 10),
 
-          MyElevatedBtn(
-            '$currentYear Placement Updates',
-            () => Get.to(() => PlacementChatPage(currentYear)),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Attendance Analysis',
-            () => Get.to(() => const StudentAttendanceAnalytics()),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Result Analysis',
-            () => Get.to(() => const ResultAnalytics()),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Upload New Activity',
-            () => Get.to(() => AddNewActivity()),
-          ),
-          //
-          const SizedBox(height: 15),
-          MyElevatedBtn(
-            'Activity Analysis',
-            () => Get.to(() => const ActivityAnalytics()),
+          /// --------------------------------- `BUTTONS`
+
+          GridView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1,
+              mainAxisSpacing: 15,
+              crossAxisSpacing: 15,
+            ),
+            children: [
+              HomeButton(
+                AppImages.attendance,
+                () => Get.to(() => const StudentAttendanceAnalytics()),
+              ),
+              HomeButton(
+                AppImages.result,
+                () => Get.to(() => const ResultAnalytics()),
+              ),
+              HomeButton(
+                AppImages.activities,
+                () => Get.to(() => const ActivityAnalytics()),
+              ),
+              HomeButton(
+                AppImages.placement,
+                () => Get.to(() => PlacementChatPage(currentYear)),
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomeButton extends StatelessWidget {
+  const HomeButton(this.image, this.onTap, {super.key});
+
+  final String image;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.prim.withAlpha(25),
+      borderRadius: BorderRadius.circular(15),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: AppColors.prim.withAlpha(50),
+        borderRadius: BorderRadius.circular(15),
+        child: Ink.image(
+          image: AssetImage(image),
+        ),
       ),
     );
   }

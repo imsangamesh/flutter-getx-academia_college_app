@@ -9,6 +9,7 @@ import 'package:newbie/core/themes/app_text_styles.dart';
 import 'package:newbie/core/utils/popup.dart';
 import 'package:newbie/data/college_data.dart';
 import 'package:newbie/models/activity_model.dart';
+import 'package:newbie/modules/activity_points/upload_new_activity.dart';
 import 'package:newbie/modules/activity_points/verified_activity_tile.dart';
 
 class ActivityAnalytics extends StatefulWidget {
@@ -76,9 +77,13 @@ class _ActivityAnalyticsState extends State<ActivityAnalytics> {
           ),
           actions: [
             IconButton(
+              onPressed: () => Get.to(() => AddNewActivity()),
+              icon: const Icon(Icons.add_circle_outline_rounded),
+            ),
+            IconButton(
               onPressed: calculateTotalPoints,
               icon: const Icon(Icons.refresh),
-            )
+            ),
           ],
         ),
         body: Obx(

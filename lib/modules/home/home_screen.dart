@@ -18,14 +18,11 @@ class HomeScreen extends StatelessWidget {
         child: Scaffold(
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
                   /// --------------------------------- `STUDENT`
-                  if (AppData.role == Role.student) ...[
-                    StudentDashboard(),
-                    const Divider(),
-                  ],
+                  if (AppData.role == Role.student) StudentDashboard(),
 
                   /// --------------------------------- `FACULTY`
                   if (AppData.role == Role.faculty) ...[
